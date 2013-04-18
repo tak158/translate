@@ -1,0 +1,86 @@
+Ruby on Rails Guides Guidelines
+This guide documents guidelines for writing Ruby on Rails Guides. This guide follows itself in a graceful loop, serving itself as an example.
+
+After reading this guide, you will know:
+
+About the conventions to be used in Rails documentation.
+How to generate guides locally.
+
+
+1 Markdown
+Guides are written in GitHub Flavored Markdown. There is comprehensive documentation for Markdown, a cheatsheet, and additional documentation on the differences from traditional Markdown.
+
+2 Prologue
+Each guide should start with motivational text at the top (that's the little introduction in the blue area). The prologue should tell the reader what the guide is about, and what they will learn. See for example the Routing Guide.
+
+3 Titles
+The title of every guide uses h1; guide sections use h2; subsections h3; etc. However, the generated HTML output will have the heading tag starting from <h2>.
+
+Guide Title
+===========
+ 
+Section
+-------
+ 
+### Sub Section
+Capitalize all words except for internal articles, prepositions, conjunctions, and forms of the verb to be:
+
+#### Middleware Stack is an Array
+#### When are Objects Saved?
+Use the same typography as in regular text:
+
+##### The `:content_type` Option
+4 API Documentation Guidelines
+The guides and the API should be coherent and consistent where appropriate. Please have a look at these particular sections of the API Documentation Guidelines
+
+Wording
+Example Code
+Filenames
+Fonts
+Those guidelines apply also to guides.
+
+5 HTML Guides
+5.1 Generation
+To generate all the guides, just cd into the guides directory, run bundle install and execute:
+
+bundle exec rake guides:generate
+or
+
+bundle exec rake guides:generate:html
+To process my_guide.md and nothing else use the ONLY environment variable:
+
+touch my_guide.md
+bundle exec rake guides:generate ONLY=my_guide
+By default, guides that have not been modified are not processed, so ONLY is rarely needed in practice.
+
+To force processing all the guides, pass ALL=1.
+
+It is also recommended that you work with WARNINGS=1. This detects duplicate IDs and warns about broken internal links.
+
+If you want to generate guides in a language other than English, you can keep them in a separate directory under source (eg. source/es) and use the GUIDES_LANGUAGE environment variable:
+
+bundle exec rake guides:generate GUIDES_LANGUAGE=es
+If you want to see all the environment variables you can use to configure the generation script just run:
+
+rake
+5.2 Validation
+Please validate the generated HTML with:
+
+bundle exec rake guides:validate
+Particularly, titles get an ID generated from their content and this often leads to duplicates. Please set WARNINGS=1 when generating guides to detect them. The warning messages suggest a solution.
+
+6 Kindle Guides
+6.1 Generation
+To generate guides for the Kindle, use the following rake task:
+
+bundle exec rake guides:generate:kindle
+Feedback
+You're encouraged to help improve the quality of this guide.
+
+If you see any typos or factual errors you are confident to patch, please clone docrails and push the change yourself. That branch of Rails has public write access. Commits are still reviewed, but that happens after you've submitted your contribution. docrails is cross-merged with master periodically.
+
+You may also find incomplete content, or stuff that is not up to date. Please do add any missing documentation for master. Check the Ruby on Rails Guides Guidelines for style and conventions.
+
+If for whatever reason you spot something to fix but cannot patch it yourself, please open an issue.
+
+And last but not least, any kind of discussion regarding Ruby on Rails documentation is very welcome in the rubyonrails-docs mailing list.

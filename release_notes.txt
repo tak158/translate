@@ -1,0 +1,148 @@
+翻訳者 内川貴雄
+
+!!Ruby on Rails 4.0 リリースノート
+Rails 4.0のハイライト
+
+*Ruby 2.0推奨、1.9.3以上が必要
+*Strong Parameters(GemライブラリだったものがRailsコアに取り込まれた)
+*Turbolinks([[https://github.com/rails/turbolinks]])
+*Russian Doll Caching([[https://github.com/rails/cache_digests]])
+これらのリリースノートは主要な要素に絞ってカバーしています。いくつかのバグが修正され変更があれば、ログかGitHubのmain Rails repository内のコミットリストを参照してください。
+
+1 Upgrading to Rails 4.0
+!1 Rails 4.0へのアップグレード
+If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Rails 3.2 in case you haven't and make sure your application still runs as expected before attempting an update to Rails 4.0. A list of things to watch out for when upgrading is available in the Upgrading to Rails guide.
+もしあなたが現存しているアプリケーションのアップグレードを行おうとした場合、詰まってしまう前によいテスト範囲を持っていることは良いアイデアです。【パス】アップグレードの際に注目すべきリストは利用可能なUpgrading to Rails guideです。
+
+!2 Rails 4.0アプリケーションの作成
+'rails' rubygemをインストールしましょう。
+ $ rails new myapp
+ $ cd myapp
+
+2.1 Vendoring Gems
+Rails now uses a Gemfile in the application root to determine the gems you require for your application to start. This Gemfile is processed by the Bundler gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
+More information: Bundler homepage
+あなたのアプリケーションを起動するために、必要とするgemを確立させるためにapplication root内にあるGemfileをRailsは使用します。
+
+
+!!2.1 Vendoring Gems
+
+!3 主な特徴(Major Features)
+ リストアップし手短に話します。これらのセクションからドキュメントまたは関連したコードを提示します。
+[[機能図|http://edgeguides.rubyonrails.org/images/rails4_features.png]]
+
+
+!4 Gemライブラリに抜粋された機能
+以下の機能はGemライブラリに抜粋されたので、使用したい場合はGemfileに依存関係を追加する必要があります。
+
+*Hash-based & Dynamic finder methods ([[Github|https://github.com/rails/activerecord-deprecated_finders]])
+*Mass assignment protection in Active Record models ([[Github|https://github.com/rails/protected_attributes]], [[Pull Request|https://github.com/rails/rails/pull/7251]])
+*ActiveRecord::SessionStore (Github, Pull Request)
+*Active Record Observers (Github, Commit)
+*Active Resource (Github, Pull Request, Blog)
+*Action Caching (Github, Pull Request)
+*Page Caching (Github, Pull Request)
+*Sprockets (Github)
+*Performance tests (Github, Pull Request)
+
+!5 Documentation
+*ガイドはGitHub風に書かれています
+*ガイドは反応しやすいデザインになっています
+
+6 Railties
+詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/railties/CHANGELOG.md]]を参照してください。
+
+6.1 主な変更点
+New test locations test/models, test/helpers, test/controllers, and test/mailers. Corresponding rake tasks added as well. (Pull Request)
+
+Your app's executables now live in the bin/ dir. Run rake rails:update:bin to get bin/bundle, bin/rails, and bin/rake.
+
+Threadsafe on by default
+
+6.2 非推奨
+config.threadsafe! is deprecated in favor of config.eager_load which provides a more fine grained control on what is eager loaded.
+
+Rails::Plugin has gone. Instead of adding plugins to vendor/plugins use gems or bundler with path or git dependencies.
+
+!7 Action Mailer
+詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/actionmailer/CHANGELOG.md]]を参照してください。
+!!7.1 Notable changes
+!!7.2 Deprecations
+
+!8 Active Model
+詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/activemodel/CHANGELOG.md]]を参照してください。
+
+!!8.1 主な変更点
+*ActiveModel::ForbiddenAttributesProtectionの追加(許可しない属性に対するMass-assignmentを防ぐシンプルなモジュール)
+*ActiveModel::Modelの追加(普通のクラスにモデルの機能を与える)
+
+!!8.2 非推奨
+*特になし
+
+!9 Active Support
+詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/activesupport/CHANGELOG.md]]を参照してください。
+
+!!9.1 主な変更点
+*ActiveSupport::Cache::MemCacheSttoreの非推奨だったmemcache-clientからdalliに変更
+*ActiveSupport::Cache::Entryを変更しメモリ使用量と処理オーバーヘッドを減少
+*Inflection(単数形/複数形)がロケールごとに設定可能となり、singularize/pluralizeが追加の引数となりロケールをとるように変更		
+*受け取ったオブジェクトがメソッド を満たさなかった場合に、Object#tryをNoMethodErrorの代わりにnilを返すように変更。ただし、Object#try!を用いることによって今までの動作を行う。
+
+!!9.2 非推奨
+*ActiveSupport::TestCase#pendingメソッドは非推奨（代わりにMiniTestのskipを使用すること）
+*ActiveSupport::Benchmarkable#silenceはスレッドの安全性が不足しているので非推奨。Rails 4.1にて削除予定
+*ActiveSupport::JSON::Variableは非推奨.#as_jsonと#encode_jsonを独自に定義すること
+*互換メソッドのModule#local_constant_namesは非推奨(代わりにModule#local_constantsを使用すること。またこのメソッドはシンボルを返す)
+*BufferedLoggerは非推奨(ActiveSupport::LoggerかRuby stdlibのloggerを使用すること)
+*assert_presentとassert_blankは非推奨(代わりに assert object.blank? と assert object.present?を使用すること)
+
+!10 Action Pack
+詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/actionpack/CHANGELOG.md]]を参照してください。
+
+10.1 主な変更点
+*developmentモードにおける例外ページのスタイルシートを変更し、例外ページに「発生した例外の断片とコード」を表示するように変更
+10.2 非推奨
+
+!11 Active Record
+詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/activerecord/CHANGELOG.md]]を参照してください。
+
+!!11.1 主な変更点
+*マイグレーションの書き方が改善され、古いupとdownメソッドがもはや必要でなくなった
+**drop_table 及び remove_column は必要な情報が与えられた場合においてリバーシブルとなった。複数カラムを削除する remove_columns はリバーシブルではない。change_table については、ブロック内でカラムの削除を行わない限りリバーシブル
+**up/downを行うコードを指定可能なreversibleメソッドを追加
+**与えられたマイグレーションをdownするrevertメソッドを追加
+*PostgreSQLの配列に対応した。【パス】
+*明確にrecordとselfを返すRelation#loadの追加
+*レコードの配列ではなく、ActiveRecord::Relationを返すModel.allの追加。もし配列を使いたい場合は、Relation#to_aを使うこと。特別な場合において、アップグレード時に破壊を引き起こす可能性あり。
+*migrationsが未決定の時にエラーを発生する、ActiveRecord::Migration.check_pending!を追加
+*Added custom coders support for ActiveRecord::Store. Now you can set your custom coder like this:
+*ActiveRecord::Store向けにcustom codersを追加。これにより、以下のようにcustom coderを設定することができます。
+ store :settings, accessors: [ :color, :homepage ], coder: JSON
+*データのロスを回避するために、mysqlとmysql2はデフォルトで SQL_MODE=STRICT_ALL_TABLES を設定するように変更。【パス】
+*IdentityMapを削除
+*EXPLAINクエリの自動実行を削除。
+*ActiveRecord::NullRelationと、関連性のあるクラスのためにnullオブジェクトパターンを実効するActiveRecord:Relation#noneを追加
+*HAB™の中間テーブルを作成するヘルパーメソッドcreate_join_tableを追加
+*PostgreSQLのhstore型が作成可能に変更
+
+!!11.2 非推奨
+*古いハッシュベースのfinder APIは非推奨。これはもはや前もってfinder optionsとして受け入れられないことを意味する
+*find_by_…とfind_by_…以外の動的メソッドが非推奨になった。次のように書きなおすべきである
+
+**find_all_by_... は rewritten using where(...).
+**find_last_by_... は rewritten using where(...).last.
+**scoped_by_... は rewritten using where(...).
+**find_or_initialize_by_... は rewritten using where(...).first_or_initialize.
+**find_or_create_by_... は rewritten using find_or_create_by(...) or where(...).first_or_create.
+**find_or_create_by_...! は rewritten using find_or_create_by!(...) or where(...).first_or_create!.
+
+!Feedback
+できることなら、このガイドの質をあげるようお願いします。
+もし誤植や致命的なミスを見かけたら自信をもって直してください。そして[[docrails|https://github.com/lifo/docrails]]をクローンし、貴方自身でpushして下さい。
+Railsブランチの記述アクセス権は公開になっています。コミットは今後も見直されますが、それはあなたが提示する後になります。[[docrails|https://github.com/lifo/docrails]は定期的にmasterにcross-mergedされます。
+
+You may also find incomplete content, or stuff that is not up to date. Please do add any missing documentation for master. Check the Ruby on Rails Guides Guidelines for style and conventions.
+
+もしあなたがそれらを見つけ直そうとしたとしても、自信でパッチを当てることはできないので、[[issueを開いてください|https://github.com/rails/rails/issues]]。
+
+最後に少しだけ。Ruby on Railsのdocumentationに関するどんな議題も[[Rubyonrails-docsメーリングリスト|https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-docs]]にてお待ちしています。

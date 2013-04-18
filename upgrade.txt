@@ -1,0 +1,45 @@
+和訳者　内川貴雄
+
+Ruby on Railsをアップデートする際のガイド
+
+このガイドはあなたがRuby on Railsの新しいバージョンが出た時にアップグレードするときの方法が記述されています。これらの方法は個別のリリースガイドにも適用可能です。
+
+You need to balance out several factors: the need for new features, the increasing difficulty of finding support for old code, and your available time and skills, to name a few.
+!1 一般的なアドバイス (General Advice)
+存在しているアプリケーションをアップグレードしようと試みる前に、あなたはよいアップグレードができると信じてください。あなたはいくつかの要因を釣り合わせる必要があります:必要な新しいこと、【パス】
+
+
+1.1 Test Coverage
+!!1.1 テスト範囲
+The best way to be sure that your application still works after upgrading is to have good test coverage before you start the process. If you don't have automated tests that exercise the bulk of your application, you'll need to spend time manually exercising all the parts that have changed. In the case of a Rails upgrade, that will mean every single piece of functionality in the application. Do yourself a favor and make sure your test coverage is good before you start an upgrade.
+
+
+
+The best way to be sure that your application still works after upgrading is to have good test coverage before you start the process. 
+If you don't have automated tests that exercise the bulk of your application, you'll need to spend time manually exercising all the parts that have changed. 
+In the case of a Rails upgrade, that will mean every single piece of functionality in the application.
+ Do yourself a favor and make sure your test coverage is good before you start an upgrade.
+
+プロセスを始める前に【】
+
+
+1.2 Ruby Versions
+!1.2 Rubyのバージョン
+
+Rails generally stays close to the latest released Ruby version when it's released:
+Railsは最新のRubyバージョンがリリースされるとその差を縮めようとする
+
+Rails 3 and above require Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially. You should upgrade as early as possible.
+*Rails3とRuby1.8.7以上。Rubyの前バージョンのすべてのサポートは公式に終わってしまう
+Rails 3.2.x is the last branch to support Ruby 1.8.7.
+*Rails 3.2.xはRuby 1.8.7をサポートする最後のブランチである
+Rails 4 prefers Ruby 2.0 and requires 1.9.3 or newer.
+*Rails 4はRuby 2.0と1.9.3より新しいものを好む
+
+Ruby 1.8.7 p248 and p249 have marshaling bugs that crash Rails. Ruby Enterprise Edition has these fixed since the release of 1.8.7-2010.02. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x, jump straight to 1.9.3 for smooth sailing.
+""Ruby 1.8.7 p248とp249はRailsをクラッシュさせるバグを持っています.Ruby Enterprise Editionは1.8.7(2010.02のリリースからデバッグに取り組んでいます。1.9の前、Ruby 1.9.1は明らかのセグメンテーションフォルトのため使うことができず、もしあなたが1.9.xを使いたければ、スムーズな航海のために1.9.3をまっすぐにとぶことになりました。
+
+
+
+!2 Upgrading from Rails 3.2 to Rails 4.0
+*This section is a work in progress.

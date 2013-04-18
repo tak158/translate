@@ -1,0 +1,11 @@
+Ruby on Rails 4.0 Release Notes
+Highlights in Rails 4.0:
+!Ruby on Rails 4.0 リリースノート
+Rails 4.0のハイライト
+
+*Ruby 2.0 preferred; 1.9.3+ required
+
+Strong Parameters
+Turbolinks
+Russian Doll Caching
+These release notes cover only the major changes. To know about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub.
