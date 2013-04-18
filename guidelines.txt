@@ -1,21 +1,28 @@
-Ruby on Rails Guides Guidelines
-This guide documents guidelines for writing Ruby on Rails Guides. This guide follows itself in a graceful loop, serving itself as an example.
+翻訳者:内川貴雄
 
-After reading this guide, you will know:
+!!Ruby on Rails Guides Guidelines
+このガイドドキュメントはRuby on Rails Guidesのために書かれています。
+This guide follows itself in a graceful loop, serving itself as an example.
 
-About the conventions to be used in Rails documentation.
-How to generate guides locally.
+このガイドを読むことによって、あなたは以下のことを知ることができます:
+
+*Rilsドキュメンテーションを使用するにあたっての協約
+*ガイドをローカルに生成する方法
 
 
-1 Markdown
-Guides are written in GitHub Flavored Markdown. There is comprehensive documentation for Markdown, a cheatsheet, and additional documentation on the differences from traditional Markdown.
+!1 Markdown
+GuidesはGitHub風のマークダウンで記述されています。
+チートシート、補足ドキュメントの伝統的なマークダウンとの違いが記述された、包括的なドキュメンテーションがあります。
 
-2 Prologue
-Each guide should start with motivational text at the top (that's the little introduction in the blue area). The prologue should tell the reader what the guide is about, and what they will learn. See for example the Routing Guide.
+!2 Prologue
+どのガイドもモチベーションの高いテキストで記述されています。（短い導入は青いエリアで記述されています。）
+prologueではguideがどのようなものか、またはどう学べばいいのかが提示されます。Routing Guideのサンプルを確認してください。
 
-3 Titles
-The title of every guide uses h1; guide sections use h2; subsections h3; etc. However, the generated HTML output will have the heading tag starting from <h2>.
+!3 Titles
+どのガイドもタイトルは<h1>;ガイドの区分は<h2>;下位区分は<h3>等で記述されています。
+しかしながら、HTMLの記述に関してはヘッドタグを<h2>で始めています。
 
+<<<
 Guide Title
 ===========
  
@@ -23,14 +30,20 @@ Section
 -------
  
 ### Sub Section
+>>>
 Capitalize all words except for internal articles, prepositions, conjunctions, and forms of the verb to be:
 
+<<<
 #### Middleware Stack is an Array
 #### When are Objects Saved?
+>>>
 Use the same typography as in regular text:
 
+<<<
 ##### The `:content_type` Option
-4 API Documentation Guidelines
+>>>
+
+!4 API Documentation Guidelines
 The guides and the API should be coherent and consistent where appropriate. Please have a look at these particular sections of the API Documentation Guidelines
 
 Wording
@@ -39,18 +52,21 @@ Filenames
 Fonts
 Those guidelines apply also to guides.
 
-5 HTML Guides
-5.1 Generation
+!5 HTML Guides
+!!5.1 Generation
 To generate all the guides, just cd into the guides directory, run bundle install and execute:
-
+<<<
 bundle exec rake guides:generate
+>>>
 or
-
+<<<
 bundle exec rake guides:generate:html
+>>>
 To process my_guide.md and nothing else use the ONLY environment variable:
-
+<<<
 touch my_guide.md
 bundle exec rake guides:generate ONLY=my_guide
+>>>
 By default, guides that have not been modified are not processed, so ONLY is rarely needed in practice.
 
 To force processing all the guides, pass ALL=1.
@@ -58,22 +74,26 @@ To force processing all the guides, pass ALL=1.
 It is also recommended that you work with WARNINGS=1. This detects duplicate IDs and warns about broken internal links.
 
 If you want to generate guides in a language other than English, you can keep them in a separate directory under source (eg. source/es) and use the GUIDES_LANGUAGE environment variable:
-
+<<<
 bundle exec rake guides:generate GUIDES_LANGUAGE=es
+>>>
 If you want to see all the environment variables you can use to configure the generation script just run:
-
+<<<
 rake
+>>>
 5.2 Validation
 Please validate the generated HTML with:
-
+<<<
 bundle exec rake guides:validate
+>>>
 Particularly, titles get an ID generated from their content and this often leads to duplicates. Please set WARNINGS=1 when generating guides to detect them. The warning messages suggest a solution.
 
-6 Kindle Guides
-6.1 Generation
+!6 Kindle Guides
+!!6.1 Generation
 To generate guides for the Kindle, use the following rake task:
-
+<<<
 bundle exec rake guides:generate:kindle
+>>>
 Feedback
 You're encouraged to help improve the quality of this guide.
 

@@ -139,7 +139,7 @@ Rails::Plugin has gone. Instead of adding plugins to vendor/plugins use gems or 
 !Feedback
 できることなら、このガイドの質をあげるようお願いします。
 もし誤植や致命的なミスを見かけたら自信をもって直してください。そして[[docrails|https://github.com/lifo/docrails]]をクローンし、貴方自身でpushして下さい。
-Railsブランチの記述アクセス権は公開になっています。コミットは今後も見直されますが、それはあなたが提示する後になります。[[docrails|https://github.com/lifo/docrails]は定期的にmasterにcross-mergedされます。
+Railsブランチの記述アクセス権は公開になっています。コミットは今後も見直されますが、それはあなたが提示する後になります。[[docrails|https://github.com/lifo/docrails]]は定期的にmasterにcross-mergedされます。
 
 You may also find incomplete content, or stuff that is not up to date. Please do add any missing documentation for master. Check the Ruby on Rails Guides Guidelines for style and conventions.
 
