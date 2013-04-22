@@ -1,0 +1,183 @@
+API Documentation Guidelines
+このガイドドキュメントはRuby on Rails API documentation guidelines関係のものです。
+
+このガイドを読むことによって、以下のことを知ることができます:
+
+*どうすればドキュメントの目的にそった効果的なコードを書くことができるか
+*Style guidelines for documenting different kinds of Ruby code.
+
+!1 RDoc
+RailsのAPIドキュメントはRDocによって生成されます。
+マークアップの手助けのために、このドキュメントを参考にしてください。そして、
+支持を追加することを考慮してください。
+
+!2 Wording
+文の陳述には、シンプルに書いてください。
+簡易な表現は確信をつきます。
+
+"Returns a hash that…"は"Returned a hash that…"や"Will return a hash that…"よりも優れた書き方です。
+
+上のようなコメントを書きましょう。
+通常の句読点のルールに従ってください:
+
+<<<
+# Declares an attribute reader backed by an internally-named 
+# instance variable.
+def attr_internal_reader(*attrs)
+  ...
+end
+>>>
+読む人に現在なにをしているのかを無理なく明確に伝えてください。
+端的なイディオムを使用するのをおすすめします。
+Reorder sections to emphasize favored approaches if needed, etc.
+このドキュメントはもっともよい実例、および公式なものになるべきです。
+
+ドキュメントは簡潔、かつ包含的である必要があります。
+エッジケースを研究し文章化してください。
+モジュールに名前がない場合はどうなりますか？何があればコレクションは空になりますか？何があれば引数はnilになりますか？
+
+Railsコンポーネントの適切な名前は単語の間にスペースが含まれます。例えば"Active Support"。ActiveRecordはRubyのモジュールであり、ORMです。
+すべてのRailsドキュメントは適切な名前でRailsのコンポーネントを参照し、and if in your next blog post or presentation you remember this tidbit and take it into account that'd be phenomenal.
+
+以下のように正しくスペルし、(Arel, Test::Unit, RSpec, HTML, MySQL, JavaScript, ERB.)
+疑わしい場合は、信頼出来る公式ドキュメントを参照してください。
+
+冠詞"an"は"SQL"に使用してください。"an SQL statement"や"an SQLite database"です。
+
+!3 English
+アメリカ英語を使うようお願いします(color, center, modularize等…)
+[[a list of American and British English spelling differences here.|http://en.wikipedia.org/wiki/American_and_British_English_spelling_differences]]を見てください。
+
+!4 Example Code
+意味のある例として表現されたものを選択し、基礎だけではなく興味深い面もカバーしましょう。
+コードのブロックをインデントする際には2スペースを開けましょう。これはマークアップの目的のためで左側に2スペースを使用します。
+
+これはRailsのコーディングにおいての協約です。
+
+Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:
+
+<<<
+# Converts a collection of elements into a formatted string by 
+# calling +to_s+ on all elements and joining them.
+#
+#   Blog.all.to_formatted_s # => "First PostSecond PostThird Post"
+>>>
+一方で、構造化されたドキュメントは別の===Examplesのセクションを持つことができます:
+<<<
+# ==== Examples
+#
+#   Person.exists?(5)
+#   Person.exists?('5')
+#   Person.exists?(name: "David")
+#   Person.exists?(['name LIKE ?', "%#{query}%"])
+>>>
+The results of expressions follow them and are introduced by "# => ", vertically aligned:
+<<<
+# For checking if a fixnum is even or odd.
+#
+#   1.even? # => false
+#   1.odd?  # => true
+#   2.even? # => true
+#   2.odd?  # => false
+>>>
+If a line is too long, the comment may be placed on the next line:
+<<<
+#   label(:post, :title)
+#   # => <label for="post_title">Title</label>
+#
+#   label(:post, :title, "A short title")
+#   # => <label for="post_title">A short title</label>
+#
+#   label(:post, :title, "A short title", class: "title_label")
+#   # => <label for="post_title" class="title_label">A short title</label>
+>>>
+Avoid using any printing methods like puts or p for that purpose.
+
+On the other hand, regular comments do not use an arrow:
+<<<
+#   polymorphic_url(record)  # same as comment_url(record)
+>>>
+!5 Filenames
+経験則として、rootに関連したファイルネームを使用してください:
+<<<
+config/routes.rb            # YES
+routes.rb                   # NO
+RAILS_ROOT/config/routes.rb # NO
+>>>
+
+!6 Fonts
+!!6.1 Fixed-width Font
+次の場合に固定幅フォントを使用してください:
+
+*常時使用、特にクラスやモジュールの名前
+*メソッド名
+*nil,false,true,selfのようなリテラル、
+*シンボル
+*メソッド引数
+*ファイル名	
+<<<
+class Array
+  # Calls +to_param+ on all its elements and joins the result with
+  # slashes. This is used by +url_for+ in Action Pack.
+  def to_param
+    collect { |e| e.to_param }.join '/'
+  end
+end
+>>>
+<<<
+Using a pair of +...+ for fixed-width font only works with words; that is: anything matching \A\w+\z. For anything else use <tt>...</tt>, notably symbols, setters, inline snippets, etc.
+>>>
+
+!!6.2 Regular Font
+trueとfalseはRubyのキーワードより英語よりなのでレギュラーフォントを使用してください:
+<<<
+# Runs all the validations within the specified context.
+# Returns true if no errors are found, false otherwise.
+#
+# If the argument is false (default is +nil+), the context is
+# set to <tt>:create</tt> if <tt>new_record?</tt> is true,
+# and to <tt>:update</tt> if it is not.
+#
+# Validations with no <tt>:on</tt> option will run no
+# matter the context. Validations with # some <tt>:on</tt>
+# option will only run in the specified context.
+def valid?(context = nil)
+  ...
+end
+>>>
+
+!7 Description Lists
+オプションのリストやパラメータ等では、アイテムと記述の間にハイフンを使用してください(オプションはシンボルのため、コロンより推奨します。):
+<<<
+# * <tt>:allow_nil</tt> - Skip validation if attribute is +nil+.
+>>>
+記述は通常の英語と同様、大文字から初めて.で終了してください。
+
+!8 Dynamically Generated Methods（動的に生成されたメソッド）
+Methods created with (module|class)_eval(STRING) have a comment by their side with an instance of the generated code. That comment is 2 spaces away from the template:
+<<<
+for severity in Severity.constants
+  class_eval <<-EOT, __FILE__, __LINE__
+    def #{severity.downcase}(message = nil, progname = nil, &block)  # def debug(message = nil, progname = nil, &block)
+      add(#{severity}, message, progname, &block)                    #   add(DEBUG, message, progname, &block)
+    end                                                              # end
+                                                                     #
+    def #{severity.downcase}?                                        # def debug?
+      #{severity} >= @level                                          #   DEBUG >= @level
+    end                                                              # end
+  EOT
+end
+>>>
+If the resulting lines are too wide, say 200 columns or more, put the comment above the call:
+<<<
+# def self.find_by_login_and_activated(*args)
+#   options = args.extract_options!
+#   ...
+# end
+self.class_eval %{
+  def self.#{method_id}(*args)
+    options = args.extract_options!
+    ...
+  end
+}
+>>>

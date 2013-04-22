@@ -2,7 +2,7 @@
 
 !!Ruby on Rails Guides Guidelines
 このガイドドキュメントはRuby on Rails Guidesのために書かれています。
-This guide follows itself in a graceful loop, serving itself as an example.
+このガイドは美しいループを以下に書出し、例としてよくできています。
 
 このガイドを読むことによって、あなたは以下のことを知ることができます:
 
@@ -31,12 +31,13 @@ Section
  
 ### Sub Section
 >>>
-Capitalize all words except for internal articles, prepositions, conjunctions, and forms of the verb to be:
+利用するすべての単語はinternal articles、前置詞、接続詞、動詞を除けば以下になり:
 
 <<<
 #### Middleware Stack is an Array
 #### When are Objects Saved?
 >>>
+
 Use the same typography as in regular text:
 
 <<<
@@ -44,34 +45,38 @@ Use the same typography as in regular text:
 >>>
 
 !4 API Documentation Guidelines
-The guides and the API should be coherent and consistent where appropriate. Please have a look at these particular sections of the API Documentation Guidelines
+guidesとAPIはおそらく明確で正確なものです。
+[[API Documentation Guideline|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html:]](リンクミスの可能性あり。その場合末尾の:を消してください)の特別な項目に関しては、以下を見るようお願いします。
 
-Wording
-Example Code
-Filenames
-Fonts
-Those guidelines apply also to guides.
+*[[Wording|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#wording]]
+*[[Example Code|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#example-code]]
+*[[Filenames|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#filenames]]
+*[[Fonts|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#fonts]]
+
+これらのguidelinesは同様にguidesに適用されます。
 
 !5 HTML Guides
 !!5.1 Generation
-To generate all the guides, just cd into the guides directory, run bundle install and execute:
+guidesを生成するために、guides directoryにチェンジディレクトリし、bundle installし実行してください:
 <<<
 bundle exec rake guides:generate
 >>>
-or
+または、
 <<<
 bundle exec rake guides:generate:html
 >>>
 To process my_guide.md and nothing else use the ONLY environment variable:
+
 <<<
 touch my_guide.md
 bundle exec rake guides:generate ONLY=my_guide
 >>>
-By default, guides that have not been modified are not processed, so ONLY is rarely needed in practice.
+規定では、修正されていないguidesは加工されておらず、実際問題としてほぼ必要とされていません。
 
-To force processing all the guides, pass ALL=1.
+guidesのすべてを押し通すには、ALL=1としてください。
 
-It is also recommended that you work with WARNINGS=1. This detects duplicate IDs and warns about broken internal links.
+WARNING=1の状態で進めても構いません。
+This detects duplicate IDs and warns about broken internal links.
 
 If you want to generate guides in a language other than English, you can keep them in a separate directory under source (eg. source/es) and use the GUIDES_LANGUAGE environment variable:
 <<<
@@ -83,24 +88,15 @@ rake
 >>>
 5.2 Validation
 Please validate the generated HTML with:
+
 <<<
 bundle exec rake guides:validate
 >>>
 Particularly, titles get an ID generated from their content and this often leads to duplicates. Please set WARNINGS=1 when generating guides to detect them. The warning messages suggest a solution.
 
 !6 Kindle Guides
-!!6.1 Generation
-To generate guides for the Kindle, use the following rake task:
+!!6.1 生成法
+Kindleのガイドを生み出すには、次のタスクをrakeしてください:
 <<<
 bundle exec rake guides:generate:kindle
 >>>
-Feedback
-You're encouraged to help improve the quality of this guide.
-
-If you see any typos or factual errors you are confident to patch, please clone docrails and push the change yourself. That branch of Rails has public write access. Commits are still reviewed, but that happens after you've submitted your contribution. docrails is cross-merged with master periodically.
-
-You may also find incomplete content, or stuff that is not up to date. Please do add any missing documentation for master. Check the Ruby on Rails Guides Guidelines for style and conventions.
-
-If for whatever reason you spot something to fix but cannot patch it yourself, please open an issue.
-
-And last but not least, any kind of discussion regarding Ruby on Rails documentation is very welcome in the rubyonrails-docs mailing list.

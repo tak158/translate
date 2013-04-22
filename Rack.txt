@@ -1,0 +1,324 @@
+翻訳者：内川貴雄
+
+Rails on Rack
+
+このガイドはRailsに統合されたRackと、他のRackコンポーネントのインタフェースについて包括します。
+
+このガイドを読むことによって、あなたは次のことを知ることができます：
+
+*RailsのMetalアプリケーションの作り方
+*Railsのアプリケーション内でどのように Rack Middleware を使用するか。
+*ミドルウェアのスタック内の Action Pack's
+*どのようにミドルウェアのスタックを定義するか
+
+""このガイドでは Rack プロトコルの知識とミドルウェアの考え方、urlマップとRack::Builderの知識があること前提としています。
+
+!1 Introduction to Rack
+
+Rackが提供しているものはとても少ないです。modularと Rubyウェブアプリケーションを開発するためのadaptable interfaceです。
+できるだけ簡単な方法でHTTPリクエストとレスポンスをラップすることで統合し、単一のメソッド呼び出しに間にWebサーバ、Webフレームワーク、ソフトウェア（いわゆるミドルウェア）のためのAPIを保持しています。
+
+*[[Rack API Documentation|http://rack.rubyforge.org/doc/]]
+
+実はこのガイドではRackについて取り扱いません。あなたがRackの基本に慣れていない場合には、[[参考文献|http://edgeguides.rubyonrails.org/rails_on_rack.html#resources]]のセクションを確認する必要があります。
+
+!2 Rails on Rack
+!!2.1 Rails Application's Rack Object
+ApplicationName::Application is the primary Rack application object of a Rails application. Any Rack compliant web server should be using ApplicationName::Application object to serve a Rails application. Rails.application refers to the same application object.
+
+ApplicationName::Application はRailsアプリケーションの主要なRackアプリケーションオブジェクトです。Rack準拠のWebサーバーは、Railsアプリケーションを運用するために、ApplicationName::Applicationオブジェクトを使用すべきです。 Rails.applicationは、同じアプリケーションオブジェクトを参照します。
+
+!!2.2 rails server
+railsサーバは、Rack::Serverオブジェクトを生み出す基本的な仕事と、Webサーバをスタートする仕事をします。
+下記はRack::Serverのインスタンスをrailsサーバが作っています。
+
+<<<
+Rails::Server.new.tap do |server|
+  require APP_PATH
+  Dir.chdir(Rails.application.root)
+  server.start
+end
+>>>
+
+Rails::ServerはRack::Serverを継承し、Rack::Server#startメソッドをこのように呼び出します。
+<<<
+class Server < ::Rack::Server
+  def start
+    ...
+    super
+  end
+end
+>>>
+
+次はミドルウェアを読み込んでいます：
+<<<
+def middleware
+  middlewares = []
+  middlewares << [Rails::Rack::Debugger] if options[:debugger]
+  middlewares << [::Rack::ContentLength]
+  Hash.new(middlewares)
+end
+>>>
+
+Rails::Rack::Debuggerは開発時に非常に有用です。
+以下のテーブルは読み込まれたミドルウェアの取り扱いです：
+
+Middleware	Purpose
+Rails::Rack::Debugger	Starts Debugger
+Rack::ContentLength	Counts the number of bytes in the response and set the HTTP Content-Length header
+
+!!2.3 rackup
+To use rackup instead of Rails' rails server, you can put the following inside config.ru of your Rails application's root directory:
+
+<<<
+# Rails.root/config.ru
+require ::File.expand_path('../config/environment',  __FILE__)
+ 
+use Rack::Debugger
+use Rack::ContentLength
+run Rails.application
+>>>
+
+そしてサーバをスタートする：
+
+<<<
+$ rackup config.ru
+>>>
+
+他のrackupのオプションについては以下のコマンドを実行してください：
+
+$ rackup --help
+!3 Action Dispatcher Middleware Stack
+
+Action Dispatche内部のコンポーネントの多くは、Rackミドルウェアとして実装されています。
+Rails::Applicationは Rails Rack application の形成のために、内部及び外部ミドルウェアを統合しActionDispatch::MiddlewareStackを使用します。
+
+""ActionDispatch::MiddlewareStackはRack:BuilderのRailsと同じようなものです。しかしより機能的で柔軟性のあるRailsを目指すなら必要なものになります。
+
+!!3.1 Inspecting Middleware Stack
+
+Railsは使用の際のミドルウェアスタックを調べるための簡単なタスクを備えています：
+<<<
+$ rake middleware
+>>>
+For a freshly generated Rails application, this might produce something like:
+新たなRailsアプリケーションを生成するために、次のようなものを生み出しているかもしれません：
+
+<<<
+use ActionDispatch::Static
+use Rack::Lock
+use #<ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x000000029a0838>
+use Rack::Runtime
+use Rack::MethodOverride
+use ActionDispatch::RequestId
+use Rails::Rack::Logger
+use ActionDispatch::ShowExceptions
+use ActionDispatch::DebugExceptions
+use ActionDispatch::RemoteIp
+use ActionDispatch::Reloader
+use ActionDispatch::Callbacks
+use ActiveRecord::ConnectionAdapters::ConnectionManagement
+use ActiveRecord::QueryCache
+use ActionDispatch::Cookies
+use ActionDispatch::Session::CookieStore
+use ActionDispatch::Flash
+use ActionDispatch::ParamsParser
+use Rack::Head
+use Rack::ConditionalGet
+use Rack::ETag
+run MyApp::Application.routes
+>>>
+
+各ミドルウェアの目的は、内部ミドルウェアにて説明されています。
+
+!!3.2 Configuring Middleware Stack
+Railsは簡易な設定インタフェースのconfig.middlewareを加え、			
+removing and modifying the middlewares in the middleware stack via application.rb or the environment specific configuration file environments/<environment>.rb.
+
+!!!3.2.1 Adding a Middleware
+下記のメソッドのいくらかを使用するミドルウェアスタックへ、アタタは新しいミドルウェアを追加することができます：
+
+*config.middleware.use(new_middleware, args) - ミドルウェアスタックの底に新しいミドルウェアを追加します
+
+*config.middleware.insert_before(existing_middleware, new_middleware, args) - ミドルウェアスタック内にすでに存在するミドルウェアの前にミドルウェアを追加します。
+
+*config.middleware.insert_after(existing_middleware, new_middleware, args) - ミドルウェアスタック内にすでに存在するミドルウェアの後にミドルウェアを追加します。
+
+<<<
+# config/application.rb
+ 
+# Push Rack::BounceFavicon at the bottom
+config.middleware.use Rack::BounceFavicon
+ 
+# Add Lifo::Cache after ActiveRecord::QueryCache.
+# Pass { page_cache: false } argument to Lifo::Cache.
+config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false
+>>>
+
+!!!3.2.2 Swapping a Middleware
+
+config.middleware.swapを使用することによって、ミドルウェアスタックに存在するミドルウェアを交換することができます。
+
+<<<
+# config/application.rb
+ 
+# Replace ActionDispatch::ShowExceptions with Lifo::ShowExceptions
+config.middleware.swap ActionDispatch::ShowExceptions, Lifo::ShowExceptions
+>>>
+
+!!!3.2.3 Middleware Stack is an Enumerable
+ミドルウェアスタックはまるで普通のEnumerableと同様に振舞います。
+いくつかのEnumerableメソッドはスタックに対して同じように命令を送ることができます。
+ミドルウェアスタックは[]、unshift、deleteを含むArrayメソッド実行することができます。
+セクションの上に記載されたメソッドはとても便利なメソッドです。
+
+あなたのアプリケーションのconfigrationに以下を追加してください：
+<<<
+# config/application.rb
+config.middleware.delete "Rack::Lock"
+>>>
+
+そして、もしあなたがミドルウェアスタックを調査するなら、Rack::Lockがその一部ではないことを発見するでしょう。
+
+<<<
+$ rake middleware
+(in /Users/lifo/Rails/blog)
+use ActionDispatch::Static
+use #<ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8>
+use Rack::Runtime
+...
+run Blog::Application.routes
+>>>
+
+もしあなたがミドルウェアに関連したセッションを削除したいなら、以下のことを実行してください：
+
+<<<
+# config/application.rb
+config.middleware.delete "ActionDispatch::Cookies"
+config.middleware.delete "ActionDispatch::Session::CookieStore"
+config.middleware.delete "ActionDispatch::Flash"
+>>>
+
+さらにミドルウェア関連のブラウザを削除するなら、
+
+<<<
+# config/application.rb
+config.middleware.delete "Rack::MethodOverride"
+>>>
+
+!!3.3 Internal Middleware Stack
+Action Controllerの機能の殆どは、ミドルウェアとして実行されます。
+
+以下のリストはそれらの別個目的が記述されています：
+
+ActionDispatch::Static
+
+*static assetsを提供するために使用します。config.serve_static_assetsをtrueにすると使用不可になります
+
+Rack::Lock
+
+*Sets env["rack.multithread"] flag to false and wraps the application within a Mutex.
+
+ActiveSupport::Cache::Strategy::LocalCache::Middleware
+
+*メモリのキャッシュに使われます。このキャッシュはスレッドセーフではありません
+
+Rack::Runtime
+
+*X-Runtimeヘッダを設定します。ヘッダはリクエストの実行のために数秒を含みます
+
+Rack::MethodOverride
+
+*params[:_method]が設定されているなら、メソッドのオーバーライドを許可します。ミドルウェアはPUT,DELETEのHTTPメソッドをサポートします
+
+ActionDispatch::RequestId
+
+*レスポンス可能で固有なX-Request-Idのヘッダを作成し、ActionDispatch::Request#uuidメソッドを使用可能にします
+
+Rails::Rack::Logger
+
+*リクエストについてのログが開始されます。その後リクエストがコンプリートされると、ログは流されます
+
+ActionDispatch::ShowExceptions
+
+*アプリケーションによって返された例外を救助し、エンドユーザーのためのフォーマットでそれをラップする例外アプリを呼び出します。
+
+ActionDispatch::DebugExceptions
+
+*例外をログに記録し、リクエストがローカルになる場合はデバッグページを表示します
+
+ActionDispatch::RemoteIp
+
+*IPスプーフィング攻撃をチェックします
+
+ActionDispatch::Reloader
+
+*準備とクリーンアップのコールバック関数を提供し、開発中のコードリロードをアシストする目的を持っています
+
+ActionDispatch::Callbacks
+
+*リクエストの供給の前に、prepareコールバック関数を実行します
+
+ActiveRecord::ConnectionAdapters::ConnectionManagement
+
+*Cleans active connections after each request, unless the rack.test key in the request environment is set to true.
+
+ActiveRecord::QueryCache
+
+*Enables the Active Record query cache.
+
+ActionDispatch::Cookies
+
+*Sets cookies for the request.
+
+ActionDispatch::Session::CookieStore
+
+*Responsible for storing the session in cookies.
+
+ActionDispatch::Flash
+
+*Sets up the flash keys. Only available if config.action_controller.session_store is set to a value.
+
+ActionDispatch::ParamsParser
+
+*Parses out parameters from the request into params.
+
+ActionDispatch::Head
+
+*Converts HEAD requests to GET requests and serves them as so.
+
+Rack::ConditionalGet
+
+*Adds support for "Conditional GET" so that server responds with nothing if page wasn't changed.
+
+Rack::ETag
+
+*Adds ETag header on all String bodies. ETags are used to validate cache.
+
+""It's possible to use any of the above middlewares in your custom Rack stack.
+
+!!3.4 Using Rack Builder
+The following shows how to replace use Rack::Builder instead of the Rails supplied MiddlewareStack.
+
+Clear the existing Rails middleware stack
+
+<<<
+# config/application.rb
+config.middleware.clear
+>>>
+
+Add a config.ru file to Rails.root
+<<<
+# config.ru
+use MyOwnStackFromScratch
+run Rails.application
+>>>
+!4 Resources
+!!4.1 Learning Rack
+*[[Official Rack Website|http://rack.github.io/]]
+*[[Introducing Rack|http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html]]
+*[[Ruby on Rack #1 - Hello Rack!|http://m.onkey.org/ruby-on-rack-1-hello-rack]]
+*[[Ruby on Rack #2 - The Builder|http://m.onkey.org/ruby-on-rack-2-the-builder]]
+
+!!4.2 Understanding Middlewares
+*[[Railscast on Rack Middlewares|http://railscasts.com/episodes/151-rack-middleware]]
