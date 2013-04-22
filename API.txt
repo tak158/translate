@@ -1,10 +1,12 @@
+翻訳者：内川貴雄
+
 API Documentation Guidelines
 このガイドドキュメントはRuby on Rails API documentation guidelines関係のものです。
 
 このガイドを読むことによって、以下のことを知ることができます:
 
 *どうすればドキュメントの目的にそった効果的なコードを書くことができるか
-*Style guidelines for documenting different kinds of Ruby code.
+*Rubyコードの種類の違いを記録するためのガイドラインのスタイル
 
 !1 RDoc
 RailsのAPIドキュメントはRDocによって生成されます。
@@ -27,7 +29,7 @@ def attr_internal_reader(*attrs)
   ...
 end
 >>>
-読む人に現在なにをしているのかを無理なく明確に伝えてください。
+読む人に現在何をしているのかを無理なく明確に伝えてください。
 端的なイディオムを使用するのをおすすめします。
 Reorder sections to emphasize favored approaches if needed, etc.
 このドキュメントはもっともよい実例、および公式なものになるべきです。
@@ -37,7 +39,7 @@ Reorder sections to emphasize favored approaches if needed, etc.
 モジュールに名前がない場合はどうなりますか？何があればコレクションは空になりますか？何があれば引数はnilになりますか？
 
 Railsコンポーネントの適切な名前は単語の間にスペースが含まれます。例えば"Active Support"。ActiveRecordはRubyのモジュールであり、ORMです。
-すべてのRailsドキュメントは適切な名前でRailsのコンポーネントを参照し、and if in your next blog post or presentation you remember this tidbit and take it into account that'd be phenomenal.
+すべてのRailsドキュメントは適切な名前でRailsのコンポーネントを参照し、もしあなたのブログを投稿したり提案したりするのなら、細々したことを覚え、並外れて素晴らしいものになります。
 
 以下のように正しくスペルし、(Arel, Test::Unit, RSpec, HTML, MySQL, JavaScript, ERB.)
 疑わしい場合は、信頼出来る公式ドキュメントを参照してください。
@@ -54,7 +56,8 @@ Railsコンポーネントの適切な名前は単語の間にスペースが含
 
 これはRailsのコーディングにおいての協約です。
 
-Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:
+短いドキュメントはあからさまな例を必要としません。
+以下にパラグラフを示します：
 
 <<<
 # Converts a collection of elements into a formatted string by 
@@ -154,7 +157,9 @@ end
 記述は通常の英語と同様、大文字から初めて.で終了してください。
 
 !8 Dynamically Generated Methods（動的に生成されたメソッド）
-Methods created with (module|class)_eval(STRING) have a comment by their side with an instance of the generated code. That comment is 2 spaces away from the template:
+(module|class)_eval(STRING)の形で作成されたメソッドは、生み出されたコードの代わりとなるコメントを持っている。
+コメントはテンプレートから2スペース分開けて記述すること：
+
 <<<
 for severity in Severity.constants
   class_eval <<-EOT, __FILE__, __LINE__
@@ -168,7 +173,7 @@ for severity in Severity.constants
   EOT
 end
 >>>
-If the resulting lines are too wide, say 200 columns or more, put the comment above the call:
+もし、結果として行が大きく広がった場合、以下のようにコメントしてください：
 <<<
 # def self.find_by_login_and_activated(*args)
 #   options = args.extract_options!

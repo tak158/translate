@@ -131,11 +131,12 @@ To upgrade, simply add gem 'dalli' to your Gemfile.
 	
 *Rails 4.0はdom_idとdom_classメソッドを非推奨としています。この機能を必要とする場合はActionView::RecordIdentifierをインクルードする必要があります。
 
-*Rails 4.0 changed how assert_generates, assert_recognizes, and assert_routing work.
-Now all these assertions raise Assertion instead of ActionController::RoutingError.
+*Rails 4.0はassert_generates、assert_recognizes、及びassert_routingの動作を変更しました。
+現在、これらのアサーションは、ActionController::RoutingErrorの代わりになっています。
 
-
-*Rails 4.0 raises an ArgumentError if clashing named routes are defined. This can be triggered by explicitly defined named routes or by the resources method. Here are two examples that clash with routes named example_path:
+*もしルートの名前が衝突していることがはっきりしているならば、Rails 4.0はArgumentErrorを引き起こします。
+これはリソースメソッドか名付けられたルートが原因になります。
+以下にルートの名前が衝突している例を2つ取り上げます：
 
 <<<
 get 'one' => 'test#example', as: :example
@@ -145,13 +146,19 @@ get 'two' => 'test#example', as: :example
 resources :examples
 get 'clashing/:id' => 'test#example', as: :example
 >>>
-In the first case, you can simply avoid using the same name for multiple routes. In the second, you can use the only or except options provided by the resources method to restrict the routes created as detailed in the Routing Guide.
+1つ目の場合では、多数のルートを同じ名前にすることによって簡単に回避出来ます。
+2つ目の場合では、you can use the only or except options provided by the resources method to restrict the routes created as detailed in [[the Routing Guide|http://edgeguides.rubyonrails.org/routing.html#restricting-the-routes-created]].
 
-*Rails 4.0 also changed the way unicode character routes are drawn. Now you can draw unicode character routes directly. If you already draw such routes, you must change them, for example:
+*Rails 4.0 はunicodeでルートを書く方法を変更しました。
+現在では直接unicodeでルートを書くことが可能です。
+もし、すでにルートを書いていた場合、変更する必要があります。
+以下にその例を示します：
 <<<
 get Rack::Utils.escape('こんにちは'), controller: 'welcome', action: 'index'
 >>>
-becomes
+
+これを以下に変えてください：
+
 <<<
 get 'こんにちは', controller: 'welcome', action: 'index'
 >>>
@@ -166,15 +173,18 @@ match "/" => "root#index", via: :get
 # or
 get "/" => "root#index"
 >>>
-*Rails 4.0 has removed ActionDispatch::BestStandardsSupport middleware, <!DOCTYPE html> already triggers standards mode per http://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx and ChromeFrame header has been moved to config.action_dispatch.default_headers.
-Remember you must also remove any references to the middleware from your application code, for example:
+*Rails 4.0はActionDispatch::BestStandardsSupportミドルウェアを削除し、[[http://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx|http://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx]]毎にスタンダードモードを引き起こし、またChromeFrameヘッダはconfig.action_dispatch.default_headersに移動されます。
+あなたはアプリケションのコードから、いくつかのミドルウェアのリファレンスを削除しなければならないことを覚えておいてください。以下に例を示します：
+
 <<<
 # Raise exception
 config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport)
 >>>
-Also check your environment settings for config.action_dispatch.best_standards_support and remove it if present.
 
-*In Rails 4.0, precompiling assets no longer automatically copies non-JS/CSS assets from vendor/assets and lib/assets. Rails application and engine developers should put these assets in app/assets or configure config.assets.precompile.
+また、config.action_dispatch.best_standards_supportの設定環境を確認し、もし存在するなら削除してください。
+
+*In Rails 4.0, precompiling assets no longer automatically copies non-JS/CSS assets from vendor/assets and lib/assets.
+Rails application and engine developers should put these assets in app/assets or configure config.assets.precompile.
 
 *In Rails 4.0, ActionController::UnknownFormat is raised when the action doesn't handle the request format. By default, the exception is handled by responding with 406 Not Acceptable, but you can override that now. In Rails 3, 406 Not Acceptable was always returned. No overrides.
 

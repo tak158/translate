@@ -1,0 +1,104 @@
+翻訳者:内川貴雄
+
+!!Ruby on Rails Guides Guidelines
+このガイドドキュメントはRuby on Rails Guidesのために書かれています。
+このガイドは美しいループを以下に書出し、例としてよくできています。
+
+このガイドを読むことによって、あなたは以下のことを知ることができます:
+
+*Rilsドキュメンテーションを使用するにあたっての協約
+*ガイドをローカルに生成する方法
+
+
+!1 Markdown
+GuidesはGitHub風のマークダウンで記述されています。
+チートシート、補足ドキュメントの伝統的なマークダウンとの違いが記述された、包括的なドキュメンテーションがあります。
+
+!2 Prologue
+どのガイドもモチベーションの高いテキストで記述されています。（短い導入は青いエリアで記述されています。）
+prologueではguideがどのようなものか、またはどう学べばいいのかが提示されます。Routing Guideのサンプルを確認してください。
+
+!3 Titles
+どのガイドもタイトルは<h1>;ガイドの区分は<h2>;下位区分は<h3>等で記述されています。
+しかしながら、HTMLの記述に関してはヘッドタグを<h2>で始めています。
+
+<<<
+Guide Title
+===========
+ 
+Section
+-------
+ 
+### Sub Section
+>>>
+利用するすべての単語はinternal articles、前置詞、接続詞、動詞を除けば以下になり:
+
+<<<
+#### Middleware Stack is an Array
+#### When are Objects Saved?
+>>>
+
+Use the same typography as in regular text:
+
+<<<
+##### The `:content_type` Option
+>>>
+
+!4 API Documentation Guidelines
+guidesとAPIはおそらく明確で正確なものです。
+[[API Documentation Guideline|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html:]](リンクミスの可能性あり。その場合末尾の:を消してください)の特別な項目に関しては、以下を見るようお願いします。
+
+*[[Wording|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#wording]]
+*[[Example Code|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#example-code]]
+*[[Filenames|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#filenames]]
+*[[Fonts|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html#fonts]]
+
+これらのguidelinesは同様にguidesに適用されます。
+
+!5 HTML Guides
+!!5.1 Generation
+guidesを生成するために、guides directoryにチェンジディレクトリし、bundle installし実行してください:
+<<<
+bundle exec rake guides:generate
+>>>
+または、
+<<<
+bundle exec rake guides:generate:html
+>>>
+To process my_guide.md and nothing else use the ONLY environment variable:
+
+<<<
+touch my_guide.md
+bundle exec rake guides:generate ONLY=my_guide
+>>>
+規定では、修正されていないguidesは加工されておらず、実際問題としてほぼ必要とされていません。
+
+guidesのすべてを押し通すには、ALL=1としてください。
+
+WARNING=1の状態で進めても構いません。
+This detects duplicate IDs and warns about broken internal links.
+
+If you want to generate guides in a language other than English, you can keep them in a separate directory under source (eg. source/es) and use the GUIDES_LANGUAGE environment variable:
+<<<
+bundle exec rake guides:generate GUIDES_LANGUAGE=es
+>>>
+If you want to see all the environment variables you can use to configure the generation script just run:
+<<<
+rake
+>>>
+5.2 Validation
+以下のように生成されたHTMLにバリデートを行なって下さい：
+
+<<<
+bundle exec rake guides:validate
+>>>
+特に、タイトルはコンテンツから生み出されたIDを入手し、それはしばしば重複を引き起こします。
+これらの状態を生み出しているガイドを検知したときは、WARNINGS=1を設定するようお願いします。
+警告メッセージは問題解決を提案します。
+
+!6 Kindle Guides
+!!6.1 生成法
+Kindleのガイドを生み出すには、次のタスクをrakeしてください:
+<<<
+bundle exec rake guides:generate:kindle
+>>>
