@@ -370,16 +370,21 @@ $ git rebase rails/branch_name
 $ git push origin branch_name
 >>>
 !!7.9 Issue a Pull Request
-Navigate to the Rails repository you just pushed to (e.g. https://github.com/your-user-name/rails) and press "Pull Request" in the upper right hand corner.
+あなたが持っているプッシュされたRailsのリポジトリ（例えば：[[https://github.com/your-user-name/rails|https://github.com/your-user-name/rails]]）に移動し、右上隅にある"Pull Request"を押して下さい。
 
-Write your branch name in the branch field (this is filled with "master" by default) and press "Update Commit Range".
+branchのフィールドにブランチ名（これはデフォルトでは"master"ばかりである）を書き、"Update Commit Range"を押して下さい。
 
-Ensure the changesets you introduced are included in the "Commits" tab. Ensure that the "Files Changed" incorporate all of your changes.
+あなたが導入した変更が"Commits"タブに格納されているか確認してください。
+あなたの変更のすべてが"Files Changed"に含まれているか確認してください。
 
-Fill in some details about your potential patch including a meaningful title. When finished, press "Send pull request". The Rails core team will be notified about your submission.
+意味のあるタイトルを含んだ、あなたのパッチに関する詳細な情報を記述して下さい。
+終わったら、"Send pull request"を押して下さい。
+Railsのコアチームはあなたの提出物に通知します。
 
 !!7.10 Get some Feedback
-Now you need to get other people to look at your patch, just as you've looked at other people's patches. You can use the rubyonrails-core mailing list or the #rails-contrib channel on IRC freenode for this. You might also try just talking to Rails developers that you know.
+あなたが他の人のパッチを見てきたように、今度はあなたのパッチを誰かに見てもらわなければなりません。
+あなたは[[Rubyonrails-core mailing list|https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core]]か#rails-contrib channel on IRCを使用することができます。
+また、あなたが知っているRailsの開発者に話をしてみてもいいでしょう。
 
 !!7.11 Iterate as Necessary
 It’s entirely possible that the feedback you get will suggest changes. Don’t get discouraged: the whole point of contributing to an active open source project is to tap into community knowledge. If people are encouraging you to tweak your code, then it’s worth making the tweaks and resubmitting. If the feedback is that your code doesn’t belong in the core, you might still think about releasing it as a gem.
