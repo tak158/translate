@@ -9,9 +9,9 @@ Contributing to Ruby on Rails
 *Ruby on Railsドキュメントに投稿する方法
 *Ruby on Rails code に投稿する方法
 
-Ruby on Rails is not "someone else's framework."
-Over the years, hundreds of people have contributed to Ruby on Rails ranging from a single character to massive architectural changes or significant documentation ― all with the goal of making Ruby on Rails better for everyone.
-Even if you don't feel up to writing code or documentation yet, there are a variety of other ways that you can contribute, from reporting issues to testing patches.
+Ruby on Rails は"someone else's framework"ではありません。
+長年にわたって、何百人もの人々が、単一の文字から大規模なアーキテクチャの変更や大幅なドキュメントに至るまでRuby on Railsに貢献してきました。ー皆のためによりよいRuby on Railsを作ることを目標にして。
+たとえ、あなたはまだ書かれたコードやdocumentationにそれを感じることがなかったとしても、貢献するための様々な方法があります。
 
 !1 Reporting an Issue（問題の報告）
 Ruby on Railsは問題の走査のために[[GitHub Issue Tracking|https://github.com/rails/rails/issues]]を使用します。(最優先なのはバグと新しいコード提出です)
@@ -19,11 +19,11 @@ Ruby on Railsは問題の走査のために[[GitHub Issue Tracking|https://githu
 問題の報告のためにGitHubのアカウント（無料）を作り、コメントかpull requestを作ってください。
 
 
-""Bugs in the most recent released version of Ruby on Rails are likely to get the most attention. Also, the Rails core team is always interested in feedback from those who can take the time to test edge Rails (the code for the version of Rails that is currently under development). Later in this guide you'll find out how to get edge Rails for testing.
+""Ruby on Railsでの最新リリースバージョンのバグは、最も注目を集める可能性が高いです。また、Railsのコアチームは、常にedge版のRailsをテストするために時間を取ることが出来る人からのフィードバックに興味をもっています。このガイドでは、後にテストのためにedge版のRailsを取得する方法について見ていきます。
 
 
 !!1.1 Creating a Bug Report
-If you find no issue addressing it you can add a new one. (See the next section for reporting security issues.)
+
 セキュリティリスクではないRuby on Railsの問題を見つけたら、GitHubの[[Issues|https://github.com/rails/rails/issues]]からそれがすでに報告されていないか検索してください。
 もしなければ[[add new one|https://github.com/rails/rails/issues/new]]を追加することができます。
 
@@ -34,8 +34,8 @@ If you find no issue addressing it you can add a new one. (See the next section 
 もっと言えば問題を引き起こさない振る舞いが期待できるunit testを含めるべきです。
 あなたの目標はこれらのことを自分で簡単にできるようにすることであり、バグを複製し修正を見つけ出すことです。
 
-Then, don't get your hopes up!
-Unless you have a "Code Red, Mission Critical, the World is Coming to an End" kind of bug, you're creating this issue report in the hope that others with the same problem will be able to collaborate with you on solving it.
+その後、あなたの希望を得ることはありません！
+あなたは、"Code Red"、またはミッションクリティカル、世界を終わらせるようなバグを持っていない限りは、同じ問題で他の人がそれを解決するためにあなたと協力することを期待して問題のレポートを作成しています。
 問題のレポートが機械的に見られたり、また誰かがバグフィックスに動いたりすることを期待してはいけません。
 問題を生み出すと大抵解決するのは自分であり、他の人は「私もこの問題を抱えている」というコメントで支援することが殆どです。
 
@@ -44,20 +44,23 @@ Active Recordのバグレポートを埋める場合は、published gemでのバ
 
 !!1.3 Special Treatment for Security Issues
 
-""Please do not report security vulnerabilities with public GitHub issue reports. The Rails security policy page details the procedure to follow for security issues.
+""publicなGitHubの問題レポートでセキュリティの脆弱性を報告しないようお願いします。詳細は[[Rails security policy page|http://rubyonrails.org/security]]に従ってください。
 
 
 !!1.4 What about Feature Requests?（機能リクエストはどう？）
-Please don't put "feature request" items into GitHub Issues.
-If there's a new feature that you want to see added to Ruby on Rails, you'll need to write the code yourself - or convince someone else to partner with you to write the code.
-Later in this guide you'll find detailed instructions for proposing a patch to Ruby on Rails.
-If you enter a wishlist item in GitHub Issues with no code, you can expect it to be marked "invalid" as soon as it's reviewed.
+GitHubの問題に、"feature request"の項目を入れてはいけません。
+もしRuby on Railsの機能に加えて、欲しいと思える新機能があれば、コードを自分で記述する必要があります。
+後でこのガイドでは、Ruby on Railsにパッチを提案するための詳細な手順を取り上げます。
+もし、コード無しにGitHubの問題でリスト項目を入力した場合、あなたはそれをすぐ見直しているものとして"invalid"マークを付けられることが予測されます。
 
-If you'd like feedback on an idea for a feature before doing the work for make a patch, please send an email to the rails-core mailing list. You might get no response, which means that everyone is indifferent. You might find someone who's also interested in building that feature. You might get a "This won't be accepted." But it's the proper place to discuss new ideas. GitHub Issues are not a particularly good venue for the sometimes long and involved discussions new features require.
+パッチを作るための作業を行う前に、昨日のアイデアにフィードバックをしたい場合は、[[rairs-core mailing list|https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core]]にメールを送信してください。もしかしたら誰もが無関心で応答がない場合もあるかもしれません。
+また、その昨日の構築に興味をもっている人を見つけるかもしれません。
+もしくは"このメールは受け付けられません"という応答になるかもしれません。
+しかし、新しいアイデアを議論するには適切な場所なのです。
 
 !2 Setting Up a Development Environment
-In this section of the guide you'll learn how to set up the tests on your own computer.
-バグを提出することによって現状の問題を解決したり、Ruby on Railsにあなた独自のコードを提出してから移るには、テストのソフトウェア・パッケージを実行する必要があります。
+既存の問題を解決する手助けやRuby on Railsに独自のコードによってバグを提出することから動くには、そのテストスイートを実行することができなければなりません。
+このセクションでは、自分のコンピュータ上でのテストを設定する方法を学びます。
 
 
 !!2.1 The Easy Way
@@ -100,7 +103,7 @@ $ bundle exec rake test
 $ ARCONN=sqlite3 ruby -Itest test/cases/associations/has_many_associations_test.rb
 >>>
 あなたはtest_jdbcmysql、test_jdbcsqlite3、test_jdbcpostgresqlを生み出すことができます。
-See the file activerecord/RUNNING_UNIT_TESTS.rdoc for information on running more targeted database tests, or the file ci/travis.rb for the test suite run by the continuous integration server.
+よりターゲットを絞ったデータベースのテストを実行する方法については、activerecord/RuNNING_UNIT_TESTS.rdocを参照してください。また、継続的インテグレーションサーバに関しての実行テストは ci/travis.rbを参照してください。
 
 !$4.1 Warnings
 警告を有効なものにしてテストのパッケージは実行されます。
@@ -134,14 +137,14 @@ $ git checkout 3-0-stable
 レポートの問題をあなたのコンピュータを再現出来ますか？
 もしそうなら、問題に対してあなたが見ているのと同じようなコメントを残すことができます。
 
-If something is very vague, can you help squash it down into something specific?
-Maybe you can provide additional information to help reproduce a bug, or help by eliminating needless steps that aren't required to demonstrate the problem.
+何かが非常に曖昧である場合、あなたは特定の何かにスカッシュすることを助けることができますか？
+おそらく、あなたはバグを再現することを手助けし、また問題を実証するために必要とされない手順を排除することによって、訳にたつ追加情報を提供することができます。
 
 もしあなたがテストなしにバグレポートを発見できるのなら、falseを返すテストに貢献する時にとても便利なものになります。
 これは、ソースコードの探検を始めようとする方法も素晴らしいものとなります。（現存するテストファイルを見ることはあなたにどうすればさらなるテストを書けるか教えることになるため）
 新しいテストは、パッチの形として最も優れた貢献となり、"Contributing to the Rails Code"のセクションを説明するのと同じようなものです。
 
-Anything you can do to make bug reports more succinct or easier to reproduce is a help to folks trying to write code to fix those bugs - whether you end up writing the code yourself or not.
+あなたがバグレポートをより完結または再現することが容易になるように何かすることは、これらのバグを修正するコードを記述しようとする人々の助けになります。
 
 !!5.2 Testing Patches
 GitHubを通じてRuby on Railsを提出したプルリクエストを調べることによってもまた助けることができます。
@@ -150,7 +153,6 @@ GitHubを通じてRuby on Railsを提出したプルリクエストを調べる�
 <<<
 $ git checkout -b testing_branch
 >>>
-For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at https://github.com/JohnSmith/rails.
 そしてあなたのcodebaseをアップデートするために、リモートbranchを使う事ができます。
 例えば、GitHubユーザのJohnSmithをforkし、[[https://github.com/JohnSmith/rails|https://github.com/JohnSmith/rails]]へ"orange"という名前のtopic branchでpushします。
 <<<
@@ -167,8 +169,9 @@ $ git pull JohnSmith orange
 一度でもpull requestが良い変更を含んで幸せになったら、あなたの賛同をGitHubのissueにコメントしましょう。
 あなたのコメントは、あなたが変更することが好き、そして何が好きかを示すべきでしょう。
 
-""I like the way you've restructured that code in generate_finder_sql ― much nicer. The tests look good too.
-If your comment simply says "+1", then odds are that other reviewers aren't going to take it too seriously. Show that you took the time to review the pull request.
+""私はあなたがgenerate_finder_sqlでそのコードを再構築した方法が好きだ。ー非常によく、良いテストに見える。
+
+もしあなたのコメントが単純に"+1"と言えば、その後オッズは他のレビューがあまりにも真剣にそれを取るつもりはないということです。あなたがpull requestを確認するために時間がかかったことを示しています。
 
 !6 Contributing to the Rails Documentation
 Ruby on Railsは2つのメインドキュメントを持っています：the guides help you in learning about Ruby on Rails と API reference です。
@@ -223,7 +226,7 @@ As a compromise, test what your code obviously affects, and if the change is not
 もしすべてがグリーンなら、あなたの貢献は十分に提案出来ます。
 どこかで予期しない破損をキャッチするために私たちは[[Travis CI|http://edgeguides.rubyonrails.org/https%0A://travis-ci.org/]]を持っています。
 
-""Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Rails will generally not be accepted.
+""安定性、機能性、Railsのテスト容易性に何も追加しない変更は、一般的に受け付けられません。
 
 !!7.3 Follow the Coding Conventions
 Railsはコーディングスタイルの簡単な規約をフォローしています：
@@ -344,7 +347,7 @@ $ git remote add mine git@github.com:<your user name>/rails.git
 <<<
 $ git push mine my_new_branch
 >>>
-You might have cloned your forked repository into your machine and might want to add the original Rails repository as a remote instead, if that's the case here's what you have to do.
+あなたは、あなたのマシンにfolkしたリポジトリをクローン化したかもしれない、その場合はリモート代わりに、オリジナルのRailsリポジトリを追加することをお勧めします。
 
 クローンしたディレクトリにて：
 <<<
@@ -387,18 +390,27 @@ Railsのコアチームはあなたの提出物に通知します。
 また、あなたが知っているRailsの開発者に話をしてみてもいいでしょう。
 
 !!7.11 Iterate as Necessary
-It’s entirely possible that the feedback you get will suggest changes. Don’t get discouraged: the whole point of contributing to an active open source project is to tap into community knowledge. If people are encouraging you to tweak your code, then it’s worth making the tweaks and resubmitting. If the feedback is that your code doesn’t belong in the core, you might still think about releasing it as a gem.
+
+フィードバックを受けて変更することは可能です。
+落胆しないでください：全体的な貢献となる活動的なオープンソースプロジェクトはコミュニティに知識として入り込みます。
+人々があなたのコードを微調整することを奨励するということは、微調整したら再び送信する価値があるということです。
+もしコアに属さないあなたのコードのフィードバックなら、gemとしてリリースすることを考えるかもしれません。
 
 !!!7.11.1 Squashing commits
-One of the things that we may ask you to do is "squash your commits," which will combine all of your commits into a single commit. We prefer pull requests that are a single commit. This makes it easier to backport changes to stable branches, squashing makes it easier to revert bad commits, and the git history can be a bit easier to follow. Rails is a large project, and a bunch of extraneous commits can add a lot of noise.
 
-In order to do this, you'll need to have a git remote that points at the main Rails repository. This is useful anyway, but just in case you don't have it set up, make sure that you do this first:
+私たちはシングルコミットされるpull requestsを好みます。
+これにより、簡単に安定したbranchにbackportできるようになり、squashingが簡単に悪いコミットを戻すことができるようになり、gitの履歴をフォローすることがほんの少しだけ簡単になります。
+Railsは大きなプロジェクトであることと、複数の異質のコミットは、多くのノイズを加える事になります。
+
+これを実行するために、あなたはメインのRailsリポジトリを指しているリモートを持っているようになる必要があります。
+これはとにかく便利です。しかし念のため、あなたはこれをまだ設定せず、最初に行う次のことを確認してください：
 <<<
 $ git remote add upstream https://github.com/rails/rails.git
 >>>
-You can call this remote whatever you'd like, but if you don't use upstream, then change the name to your own in the instructions below.
+あなたが呼び出したいリモートはなんでも呼び出すことができます。しかし、upstreamを使用していない場合、以下の手順で名前を変更してください。
 
-Given that your remote branch is called my_pull_request, then you can do the following:
+あなたのリモートブランチがmy_pull_requestに呼ばれることを考えると、以下が可能となります：
+
 <<<
 $ git fetch upstream
 $ git checkout my_pull_request
@@ -410,32 +422,39 @@ $ git rebase -i
  
 $ git push origin my_pull_request -f
 >>>
-You should be able to refresh the pull request on GitHub and see that it has been updated.
+
+あなたは、GitHub上のpullリクエストを更新することができ、またそれが更新されていることを見ることができるでしょう。
 
 !!7.12 Backporting
-Changes that are merged into master are intended for the next major release of Rails. Sometimes, it might be beneficial for your changes to propagate back to the maintenance releases for older stable branches. Generally, security fixes and bug fixes are good candidates for a backport, while new features and patches that introduce a change in behavior will not be accepted. When in doubt, it is best to consult a Rails team member before backporting your changes to avoid wasted effort.
+masterにマージされた変更は、Railsの次のメジャーリリースのために意図されています。
+ときどきは、あなたの変更は古い安定したbranchのメンテナンスリリースに戻って伝播することが有益かもしれません。
+一般的に、新機能とパッチが上手く振る舞いを行わない間の、セキュリティの修正とバグの修正はbackportの良い候補となります。
+疑問がある場合、無駄な努力を避けるために、あなたの変更をbackportする前にRailsのチームメンバーに相談するのがベストです。
 
-For simple fixes, the easiest way to backport your changes is to extract a diff from your changes in master and apply them to the target branch.
+簡単な修正のために、あなたの変更を簡単にbackportする方法は、[[masterで変更から差分を抽出し、ターゲットbranchにてそれらを適用することhttp://ariejan.net/2009/10/26/how-to-create-and-apply-a-patch-with-git/]]です。
 
-First make sure your changes are the only difference between your current branch and master:
+始めに、あなたの変更が現在のbranchとmasterとの違いであることを確認してください：
 <<<
 $ git log master..HEAD
 >>>
-Then extract the diff:
+差分の抽出：
 <<<
 $ git format-patch master --stdout > ~/my_changes.patch
 >>>
-Switch over to the target branch and apply your changes:
-
+ターゲットbranchに切り替えて、あなたの変更を適用：
 <<<
 $ git checkout -b my_backport_branch 3-2-stable
 $ git apply ~/my_changes.patch
 >>>
-This works well for simple changes. However, if your changes are complicated or if the code in master has deviated significantly from your target branch, it might require more work on your part. The difficulty of a backport varies greatly from case to case, and sometimes it is simply not worth the effort.
+この作業は簡単な変更に適しています。
+しかしながら、あなたの変更が複雑か、masterのコードがあなたのターゲットbranchから大きく逸脱してしまった場合、多くの作業を必要としてしまう場合があります。
+backportの難しさは、ケースバイケースで大きく異なります、また時には単純に努力がそのまま価値になるわけではありません。
 
-Once you have resolved all conflicts and made sure all the tests are passing, push your changes and open a separate pull request for your backport. It is also worth noting that older branches might have a different set of build targets than master. When possible, it is best to first test your backport locally against the Ruby versions listed in .travis.yml before submitting your pull request.
+競合を解決し、全てのテストを通過していることを確認したら、あなたの変更をpushし、backport用に別のpull request をオープンしてください。
+また、古いbranchがビルドターゲットとは違ったセットがある可能性も注目すべきことです。
+可能であれば、あなたのpull requestの前に、最初にtravis.ymlに記載されているRubyのバージョンに対してローカルにbackportをテストしてください。
 
-And then... think about your next contribution!
+それでは… あなたの次の貢献は一体何でしょう！
 
 !8 Rails Contributors
 すべての貢献者はRails Contributorsのクレジットを得ます。
