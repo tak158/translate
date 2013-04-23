@@ -38,7 +38,7 @@ Section
 #### When are Objects Saved?
 >>>
 
-Use the same typography as in regular text:
+通常のテキストと同じタイポグラフィを使用してください：
 
 <<<
 ##### The `:content_type` Option
@@ -65,7 +65,7 @@ bundle exec rake guides:generate
 <<<
 bundle exec rake guides:generate:html
 >>>
-To process my_guide.md and nothing else use the ONLY environment variable:
+my_guide.mdを処理し、ONLY以外の環境変数を使用しないためには：
 
 <<<
 touch my_guide.md
@@ -76,13 +76,13 @@ bundle exec rake guides:generate ONLY=my_guide
 guidesのすべてを押し通すには、ALL=1としてください。
 
 WARNING=1の状態で進めても構いません。
-This detects duplicate IDs and warns about broken internal links.
+これは、重複したIDを検出し、破壊した内部リンクを警告します。
 
-If you want to generate guides in a language other than English, you can keep them in a separate directory under source (eg. source/es) and use the GUIDES_LANGUAGE environment variable:
+あなたが英語以外の言語でガイドを生成したい場合は、ソース（例：source/es）の下で別のディレクトリに分けて設定を保管し、またGUIDES_LANGUAGEの環境変数を使用してください：
 <<<
 bundle exec rake guides:generate GUIDES_LANGUAGE=es
 >>>
-If you want to see all the environment variables you can use to configure the generation script just run:
+すべての環境変数を参照したい場合には、実行スクリプトを設定するために使うことができます：
 <<<
 rake
 >>>
@@ -92,7 +92,9 @@ Please validate the generated HTML with:
 <<<
 bundle exec rake guides:validate
 >>>
-Particularly, titles get an ID generated from their content and this often leads to duplicates. Please set WARNINGS=1 when generating guides to detect them. The warning messages suggest a solution.
+特に、タイトルはコンテンツから生まれたIDを取得します。これは多くの場合重複につながります。
+それらを検出するためにガイドを生成するときはWARNINGS=1を設定してください。
+その警告メッセージは問題の解決を提案します。
 
 !6 Kindle Guides
 !!6.1 生成法
