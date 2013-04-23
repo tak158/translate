@@ -1,4 +1,4 @@
-和訳者　内川貴雄
+和訳者 内川貴雄
 
 Ruby on Railsをアップデートする際のガイド
 
@@ -186,23 +186,24 @@ config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport
 *In Rails 4.0, precompiling assets no longer automatically copies non-JS/CSS assets from vendor/assets and lib/assets.
 Rails application and engine developers should put these assets in app/assets or configure config.assets.precompile.
 
-*In Rails 4.0, ActionController::UnknownFormat is raised when the action doesn't handle the request format. By default, the exception is handled by responding with 406 Not Acceptable, but you can override that now. In Rails 3, 406 Not Acceptable was always returned. No overrides.
+*Rails 4.0では、リクエストフォーマットが操作できないとき、ActionControllerc::UnknownFormatが掲げられます。初期設定では、406 Not acceptableを引き起こして例外は処理されますが、あなたはこれをオーバーライドすることもできます。Rails 3では、406 Not Acceptableが常時帰ってきます。これはオーバーライドできません。
 
-*In Rails 4.0, a generic ActionDispatch::ParamsParser::ParseError exception is raised when ParamsParser fails to parse request params. You will want to rescue this exception instead of the low-level MultiJson::DecodeError, for example.
+*Rails 4.0では、一般的なActionDispatch::ParamsParser::ParseError例外は、リクエストしたパラメータを分析することによってParamsParserが失敗した時に発生します。例えば：あなたはlow-level MultiJson::DecodeErrorの代わりにこの例外を治したいと思うでしょう。
 
-*In Rails 4.0, SCRIPT_NAME is properly nested when engines are mounted on an app that's served from a URL prefix. You no longer have to set default_url_options[:script_name] to work around overwritten URL prefixes.
+*Rails 4.0では、URLプレフィックスから付けられたアプリ上に検索エンジンがマウントされた時、SCRIPT_NAMEは完全に入れ子になります。あなたはURLプレフィックスの上書き周りの作業をするために、もはやdefault_url_options[:script_name]の設定をm吸うRuby on Rails必要はありません。
 
-*Rails 4.0 deprecated ActionController::Integration in favor of ActionDispatch::Integration.
+*Rails 4.0 ではActionControllor::Integrationは非推奨で、ActionDispatch::Integrationを推奨しています。
 
-*Rails 4.0 deprecated ActionController::IntegrationTest in favor of ActionDispatch::IntegrationTest.
+*Rails 4.0 ではActionControllor::IntegrationTestは非推奨で、ActionDispatch::IntegrationTestを推奨しています。
 
-*Rails 4.0 deprecated ActionController::PerformanceTest in favor of ActionDispatch::PerformanceTest.
+*Rails 4.0 ではActionControllor::PerformanceTestは非推奨で、ActionDispatch::PerformanceTestを推奨しています。
 
-*Rails 4.0 deprecated ActionController::AbstractRequest in favor of ActionDispatch::Request.
+*Rails 4.0 ではActionControllor::AbstractRequestは非推奨で、ActionDispatch::Requestを推奨しています。
 
-*Rails 4.0 deprecated ActionController::Request in favor of ActionDispatch::Request.
+*Rails 4.0 ではActionControllor::Requestは非推奨で、ActionDispatch::Requestを推奨しています。
 
 *Rails 4.0 deprecated ActionController::AbstractResponse in favor of ActionDispatch::Response.
+*Rails 4.0 ではActionControllor::Requestは非推奨で、ActionDispatch::Responseを推奨しています。
 
 *Rails 4.0 deprecated ActionController::Response in favor of ActionDispatch::Response.
 

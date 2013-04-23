@@ -63,13 +63,13 @@ In this section of the guide you'll learn how to set up the tests on your own co
 
 
 !!2.1 The Easy Way
-The easiest and recommended way to get a development environment ready to hack is to use the Rails development box.
+開発環境を準備する際の最も簡単で推奨される方法は、Rails development boxを使用することです。
 
 !!2.2 The Hard Way
-In case you can't use the Rails development box, see section above, check this other guide.
+あなたがRails development boxを使用しない場合、他のガイドを確認してください。
 
 !3 Running an Application Against Your Local Branch（あなたのローカルブランチにてアプリケーションを実効する）
---devをつけたrails newコマンドはあなたのローカルブランチを使ったアプリケーションを生成します:
+--devをつけたrails	 newコマンドはあなたのローカルブランチを使ったアプリケーションを生成します:
 <<<
 $ cd rails
 $ bundle exec rails new ~/my-test-app --dev
@@ -94,28 +94,36 @@ test_postgresql
 <<<
 $ bundle exec rake test
 >>>
-will now run the four of them in turn.
 
-You can also run any single test separately:
+上記のコマンドは順に4つ実行されます。
+
+またいくつかの命令によって別々にテストを実行出来ます：
 <<<
 $ ARCONN=sqlite3 ruby -Itest test/cases/associations/has_many_associations_test.rb
 >>>
-You can invoke test_jdbcmysql, test_jdbcsqlite3 or test_jdbcpostgresql also. See the file activerecord/RUNNING_UNIT_TESTS.rdoc for information on running more targeted database tests, or the file ci/travis.rb for the test suite run by the continuous integration server.
+あなたはtest_jdbcmysql、test_jdbcsqlite3、test_jdbcpostgresqlを生み出すことができます。
+See the file activerecord/RUNNING_UNIT_TESTS.rdoc for information on running more targeted database tests, or the file ci/travis.rb for the test suite run by the continuous integration server.
 
 !$4.1 Warnings
-The test suite runs with warnings enabled. Ideally, Ruby on Rails should issue no warnings, but there may be a few, as well as some from third-party libraries. Please ignore (or fix!) them, if any, and submit patches that do not issue new warnings.
+警告を有効なものにしてテストのパッケージは実行されます。
+理想としては、Ruby on Railsは警告を出さないことでしょう、しかし、おそらくはいくつかの警告、およびサードパーティ製のライブラリからの警告が出るでしょう。
+これらは無視（または修正！）し、もしあれば、警告を出さないパッチを提出してください。
 
-As of this writing (December, 2010) they are especially noisy with Ruby 1.9. If you are sure about what you are doing and would like to have a more clear output, there's a way to override the flag:
+これを書いている時点（2010年12月）では、Ruby 1.9に特にうるさいです。
+もしあなたが何をするかを明確にしている、またはどのようなアウトプットを行うかを明らかにしているのなら、flagをオーバーライドする方法はあります:
 <<<
 $ RUBYOPT=-W0 bundle exec rake test
 >>>
 !!4.2 Older Versions of Ruby on Rails
-If you want to add a fix to older versions of Ruby on Rails, you'll need to set up and switch to your own local tracking branch. Here is an example to switch to the 3-0-stable branch:
+もしあなたが古いバージョンのRuby on Railsを修正したいのなら、自身のローカルにtracking branchにスイッチし、セットアップする必要があります。
+以下は3-0-stable branchにスイッチするサンプルです：
+
 <<<
 $ git branch --track 3-0-stable origin/3-0-stable
 $ git checkout 3-0-stable
 >>>
-""You may want to put your Git branch name in your shell prompt to make it easier to remember which version of the code you're working with.
+
+""あなたが仕事をしてきたコードのバージョンと覚える目的で、シェルプロンプトを使用して簡単に実行し、Git branchの名前を置き換えたいでしょう【意味不明なので書き直し】
 
 !5 Helping to Resolve Existing Issues
 あなたの問題の報告の次のステップは、現状の問題を解決しようとしているコアチームを助けることです。
@@ -138,22 +146,28 @@ Maybe you can provide additional information to help reproduce a bug, or help by
 Anything you can do to make bug reports more succinct or easier to reproduce is a help to folks trying to write code to fix those bugs - whether you end up writing the code yourself or not.
 
 !!5.2 Testing Patches
-You can also help out by examining pull requests that have been submitted to Ruby on Rails via GitHub. To apply someone's changes you need first to create a dedicated branch:
+GitHubを通じてRuby on Railsを提出したプルリクエストを調べることによってもまた助けることができます。
+誰かの変更を適用するには、まず始めに専用のbranchを作成する必要があります：
+
 <<<
 $ git checkout -b testing_branch
 >>>
-Then you can use their remote branch to update your codebase. For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at https://github.com/JohnSmith/rails.
+For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at https://github.com/JohnSmith/rails.
+そしてあなたのcodebaseをアップデートするために、リモートbranchを使う事ができます。
+例えば、GitHubユーザのJohnSmithをforkし、[[https://github.com/JohnSmith/rails|https://github.com/JohnSmith/rails]]へ"orange"という名前のtopic branchでpushします。
 <<<
 $ git remote add JohnSmith git://github.com/JohnSmith/rails.git
 $ git pull JohnSmith orange
 >>>
-After applying their branch, test it out! Here are some things to think about:
+これらのbranchの適用後、テストを行いましょう！以下に考慮すべきことを挙げます：
 
-*Does the change actually work?
-*Are you happy with the tests? Can you follow what they're testing? Are there any tests missing?
-*Does it have the proper documentation coverage? Should documentation elsewhere be updated?
-*Do you like the implementation? Can you think of a nicer or faster way to implement a part of their change?
-Once you're happy that the pull request contains a good change, comment on the GitHub issue indicating your approval. Your comment should indicate that you like the change and what you like about it. Something like:
+*変更は本当に働いていますか？
+*テストによって何かいいことはありますか？彼らのテストをフォローできていますか？テストにミスはありませんか？
+*適切なドキュメントを把握していますか？ドキュメントは他の場所で更新する必要がありますか？
+*実行は好きですか？変更の実施のためによりよくて早い方法を考えられていますか？
+
+一度でもpull requestが良い変更を含んで幸せになったら、あなたの賛同をGitHubのissueにコメントしましょう。
+あなたのコメントは、あなたが変更することが好き、そして何が好きかを示すべきでしょう。
 
 ""I like the way you've restructured that code in generate_finder_sql ― much nicer. The tests look good too.
 If your comment simply says "+1", then odds are that other reviewers aren't going to take it too seriously. Show that you took the time to review the pull request.
@@ -161,14 +175,18 @@ If your comment simply says "+1", then odds are that other reviewers aren't goin
 !6 Contributing to the Rails Documentation
 Ruby on Railsは2つのメインドキュメントを持っています：the guides help you in learning about Ruby on Rails と API reference です。
 
-You can help improve the Rails guides by making them more coherent, consistent or readable, adding missing information, correcting factual errors, fixing typos, or bringing it up to date with the latest edge Rails.
-To get involved in the translation of Rails guides, please see Translating Rails Guides.
+あなたはRails guidesの発展を、一貫した文書であったり、矛盾しておらずた読めるものであったり、失敗の情報を加えたものであったり、エラーの修正法であったり、誤植の修正であったり、最新のRails endgeを発展させたりすることによって助けることができます。
 
-If you're confident about your changes, you can push them directly yourself via docrails. Docrails is a branch with an open commit policy and public write access. Commits to docrails are still reviewed, but this happens after they are pushed. Docrails is merged with master regularly, so you are effectively editing the Ruby on Rails documentation.
+Rails guidesの翻訳に参加するには、[[Trasslating Rails Guides|https://github.com/lifo/docrails/wiki/translating-rails-guides]]を参照してください。
 
-If you are unsure of the documentation changes, you can create an issue in the Rails issues tracker on GitHub.
+もしあなたの変更について確信が持てているなら、[[docrails|https://github.com/lifo/docrails]]を通じて貴方自身で直接pushすることができます。
+Docrailsはオープンコミットポリシーを持ち、誰でも記述するアクセス権を持っているブランチです。
+Docrailsにコミットは今でも再調査されておりますが、しかしpushした後に再調査が起こるかもしれません。
+Docrailsは定期的にmasterにmergeされているため、あなたは効果的にRuby on Rails documentationを編集できます。
 
-When working with documentation, please take into account the API Documentation Guidelines and the Ruby on Rails Guides Guidelines.
+もしドキュメントの変更に確信が持てないのなら、GitHub上の[[Rails|https://github.com/rails/rails/issues]]問題提起場に問題を作ることができます。
+
+documenttationに関して仕事するとき、[[API Documentation Guidelines|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html]]と[[Ruby on Rails Guides Guidelines|http://edgeguides.rubyonrails.org/ruby_on_rails_guides_guidelines.html]]を参考にしてください。
 
 ""As explained earlier, ordinary code patches should have proper documentation coverage. Docrails is only used for isolated documentation improvements.
 
