@@ -190,7 +190,7 @@ Rails application and engine developers should put these assets in app/assets or
 
 *Rails 4.0では、一般的なActionDispatch::ParamsParser::ParseError例外は、リクエストしたパラメータを分析することによってParamsParserが失敗した時に発生します。例えば：あなたはlow-level MultiJson::DecodeErrorの代わりにこの例外を治したいと思うでしょう。
 
-*Rails 4.0では、URLプレフィックスから付けられたアプリ上に検索エンジンがマウントされた時、SCRIPT_NAMEは完全に入れ子になります。あなたはURLプレフィックスの上書き周りの作業をするために、もはやdefault_url_options[:script_name]の設定をm吸うRuby on Rails必要はありません。
+*Rails 4.0では、URLプレフィックスから付けられたアプリ上に検索エンジンがマウントされた時、SCRIPT_NAMEは完全に入れ子になります。あなたはURLプレフィックスの上書き周りの作業をするために、もはやdefault_url_options[:script_name]の設定を行う必要はありません。
 
 *Rails 4.0 ではActionControllor::Integrationは非推奨で、ActionDispatch::Integrationを推奨しています。
 

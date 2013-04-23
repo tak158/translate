@@ -186,30 +186,34 @@ Docrailsは定期的にmasterにmergeされているため、あなたは効果�
 
 もしドキュメントの変更に確信が持てないのなら、GitHub上の[[Rails|https://github.com/rails/rails/issues]]問題提起場に問題を作ることができます。
 
-documenttationに関して仕事するとき、[[API Documentation Guidelines|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html]]と[[Ruby on Rails Guides Guidelines|http://edgeguides.rubyonrails.org/ruby_on_rails_guides_guidelines.html]]を参考にしてください。
+documentationに関して仕事するとき、[[API Documentation Guidelines|http://edgeguides.rubyonrails.org/api_documentation_guidelines.html]]と[[Ruby on Rails Guides Guidelines|http://edgeguides.rubyonrails.org/ruby_on_rails_guides_guidelines.html]]を参考にしてください。
 
-""As explained earlier, ordinary code patches should have proper documentation coverage. Docrails is only used for isolated documentation improvements.
+""手早く説明すると、通常のコードのパッチは適切なdocumentationに適用されます。Docrailsは孤立したdocumentationの進歩のためだけに使用されます。
 
-""To help our CI servers you can add [ci skip] to your documentation commit message to skip build on that commit. Please remember to use it for commits containing only documentation changes.
 
-""Docrails has a very strict policy: no code can be touched whatsoever, no matter how trivial or small the change. Only RDoc and guides can be edited via docrails. Also, CHANGELOGs should never be edited in docrails.
+""私たちのCIサーバを助けるために、あなたは[ci skip]をあなたなdocumentationコミットメッセージにコミットの際にビルドをスキップする目的で加えることができます。documentationの変更にコミットが包括するためだけにそれを使うことを覚えておくようにお願いします。
+
+""Docrailsは厳格なポリシーを持っています：コードの無いものはノータッチ、取るに足らない小さな変更は問わない。RDocとguidesはdocrailsを通してのみ編集ができます。また、CHANGELOGsはdocrailsないでは変更されません。
 
 !7 Contributing to the Rails Code
 !!7.1 Clone the Rails Repository
-The first thing you need to do to be able to contribute code is to clone the repository:
+はじめにあなたが与えるべきコードは、リポジトリをくろーんすることです：
 
 <<<
 $ git clone git://github.com/rails/rails.git
 >>>
-and create a dedicated branch:
+次に専用のbranchを作って下さい：
 <<<
 $ cd rails
 $ git checkout -b my_new_branch
 >>>
-It doesn’t matter much what name you use, because this branch will only exist on your local computer and your personal repository on GitHub. It won't be part of the Rails Git repository.
+あなたがどんな名前をつけようと特に問題はありません。なぜならそのbranchはあなたのローカルコンピュータとGitHub上の個人のリポジトリでしかずっと存在しないからです。RailsのGitリポジトリの一部になることはありません。
 
 !!7.2 Write Your Code
-Now get busy and add or edit code. You’re on your branch now, so you can write whatever you want (you can check to make sure you’re on the right branch with git branch -a). But if you’re planning to submit your change back for inclusion in Rails, keep a few things in mind:
+コードの編集と追加に忙しくなりましょう。
+あなたがあなたのbranch上を使っている時、あなたが行いたいすべてのことが書き込めます。（git branch -aであなたが正しいbranchにいるか確認することができます）
+But if you’re planning to submit your change back for inclusion in Rails, keep a few things in mind:
+しかし、
 
 *Get the code right.
 *Use Rails idioms and helpers.
