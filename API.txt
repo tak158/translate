@@ -74,7 +74,7 @@ Railsコンポーネントの適切な名前は単語の間にスペースが含
 #   Person.exists?(name: "David")
 #   Person.exists?(['name LIKE ?', "%#{query}%"])
 >>>
-The results of expressions follow them and are introduced by "# => ", vertically aligned:
+式の結果は、それらに従うことによって導き出されます "# => ", vertically aligned:
 <<<
 # For checking if a fixnum is even or odd.
 #
@@ -83,7 +83,7 @@ The results of expressions follow them and are introduced by "# => ", vertically
 #   2.even? # => true
 #   2.odd?  # => false
 >>>
-If a line is too long, the comment may be placed on the next line:
+線が長すぎた場合は、コメントを次の行に配置することができます：
 <<<
 #   label(:post, :title)
 #   # => <label for="post_title">Title</label>
@@ -94,9 +94,9 @@ If a line is too long, the comment may be placed on the next line:
 #   label(:post, :title, "A short title", class: "title_label")
 #   # => <label for="post_title" class="title_label">A short title</label>
 >>>
-Avoid using any printing methods like puts or p for that purpose.
+目的のためにputまたはpのような出力方法を使用することは避けて下さい：
 
-On the other hand, regular comments do not use an arrow:
+一方、よく用いられるコメントは、矢印を使用しないでください：
 <<<
 #   polymorphic_url(record)  # same as comment_url(record)
 >>>

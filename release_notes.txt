@@ -1,31 +1,48 @@
-翻訳者 内川貴雄
+翻訳者：内川貴雄s
 
-!!Ruby on Rails 4.0 リリースノート
+Ruby on Rails 4.0 リリースノート
 Rails 4.0のハイライト
 
 *Ruby 2.0推奨、1.9.3以上が必要
 *Strong Parameters(GemライブラリだったものがRailsコアに取り込まれた)
 *Turbolinks([[https://github.com/rails/turbolinks]])
 *Russian Doll Caching([[https://github.com/rails/cache_digests]])
-これらのリリースノートは主要な要素に絞ってカバーしています。いくつかのバグが修正され変更があれば、ログかGitHubのmain Rails repository内のコミットリストを参照してください。
+これらのリリースノートは主要な要素に絞ってカバーしています。いくつかのバグが修正され変更があれば、ログかGitHubのmain Rails repository内の[[コミットリスト|https://github.com/rails/rails/commits/master]]を参照してください。
 
 1 Upgrading to Rails 4.0
 !1 Rails 4.0へのアップグレード
-If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Rails 3.2 in case you haven't and make sure your application still runs as expected before attempting an update to Rails 4.0. A list of things to watch out for when upgrading is available in the Upgrading to Rails guide.
-もしあなたが現存しているアプリケーションのアップグレードを行おうとした場合、詰まってしまう前によいテスト範囲を持っていることは良いアイデアです。【パス】アップグレードの際に注目すべきリストは利用可能なUpgrading to Rails guideです。
+もしあなたが現存しているアプリケーションのアップグレードを行おうとした場合、詰まってしまう前によいテスト範囲を持っていることは良いアイデアです。
+Rails 4.0 へのアップデートを試みる前に、Rails 3.2 へのアップグレードがすんでいないならそれを行い、期待通りにアプリケーションが実行されるかどうか確認してください。
+アップグレードの際に気をつけておくべきことは[[Upgrading to Rails|http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-3-2-to-rails-4-0]]に書かれています。
+
 
 !2 Rails 4.0アプリケーションの作成
+<<<
 'rails' rubygemをインストールしましょう。
  $ rails new myapp
  $ cd myapp
-
-2.1 Vendoring Gems
-Rails now uses a Gemfile in the application root to determine the gems you require for your application to start. This Gemfile is processed by the Bundler gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
-More information: Bundler homepage
-あなたのアプリケーションを起動するために、必要とするgemを確立させるためにapplication root内にあるGemfileをRailsは使用します。
-
+>>>
 
 !!2.1 Vendoring Gems
+あなたのアプリケーションを起動するために、必要とするgemを確立させるためにapplication root内にあるGemfileをRailsは使用します。
+このGemfileはユーザが依存しているすべてのインストールされた[[Bundler|https://github.com/carlhuda/bundler]] gemによって処理されます。
+あなたのアプリケーション対して、ローカルにすべての依存関係をインストールすることができます。それは、gemには影響されません。
+
+さらなる情報は:[[Bundler homepage|http://gembundler.com/]]を参照してください。
+
+!!2.2 Living on the Edge
+BundlerとGemfileは新しく入力されたbundleコマンドによって、あなたのRailsアプリケーションを簡単に凍結させることができます。
+--edge フラグを付けることによって、Gitリポジトリから直接Bundleしたい場合に適用することができます。
+
+<<<
+$ rails new myapp --edge
+>>>
+
+Railsリポジトリのローカルチェックアウトを所持してアプリケーションを生成する場合は、--dev flag を用いることによって通過することができます：
+
+<<<
+$ ruby /path/to/rails/railties/bin/rails new myapp --dev
+>>>
 
 !3 主な特徴(Major Features)
  リストアップし手短に話します。これらのセクションからドキュメントまたは関連したコードを提示します。
@@ -37,7 +54,7 @@ More information: Bundler homepage
 
 *Hash-based & Dynamic finder methods ([[Github|https://github.com/rails/activerecord-deprecated_finders]])
 *Mass assignment protection in Active Record models ([[Github|https://github.com/rails/protected_attributes]], [[Pull Request|https://github.com/rails/rails/pull/7251]])
-*ActiveRecord::SessionStore (Github, Pull Request)
+*ActiveRecord::SessionStore ([[Github|]]n, Pull Request)
 *Active Record Observers (Github, Commit)
 *Active Resource (Github, Pull Request, Blog)
 *Action Caching (Github, Pull Request)
@@ -53,16 +70,16 @@ More information: Bundler homepage
 詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/railties/CHANGELOG.md]]を参照してください。
 
 6.1 主な変更点
-New test locations test/models, test/helpers, test/controllers, and test/mailers. Corresponding rake tasks added as well. (Pull Request)
+*新しいテストロケーションである test/models, test/helpers, test/controllers, test/mailers.対応するRakeタスクも同様に追加されました。([[Pull Request|https://github.com/rails/rails/pull/7878]])
 
-Your app's executables now live in the bin/ dir. Run rake rails:update:bin to get bin/bundle, bin/rails, and bin/rake.
+*あなたのアプリケーションは現在はbin/ dirで実行されています。rake rails:update:binを実行して bin/bundle, bin/rails, bin/rake を入手してください。
 
-Threadsafe on by default
+*デフォルトでスレッドセーフになりました
 
 6.2 非推奨
-config.threadsafe! is deprecated in favor of config.eager_load which provides a more fine grained control on what is eager loaded.
+*config.threadsafe! は非推奨になり、config.eager_load が推奨されます
 
-Rails::Plugin has gone. Instead of adding plugins to vendor/plugins use gems or bundler with path or git dependencies.
+*Rails::Plugin は進められなくなりました。代わりに vendor/pluginsがgemまたはbundlerに追加されています
 
 !7 Action Mailer
 詳細な変更は[[Changelog|https://github.com/rails/rails/blob/master/actionmailer/CHANGELOG.md]]を参照してください。
@@ -135,14 +152,3 @@ Rails::Plugin has gone. Instead of adding plugins to vendor/plugins use gems or 
 **find_or_initialize_by_... は rewritten using where(...).first_or_initialize.
 **find_or_create_by_... は rewritten using find_or_create_by(...) or where(...).first_or_create.
 **find_or_create_by_...! は rewritten using find_or_create_by!(...) or where(...).first_or_create!.
-
-!Feedback
-できることなら、このガイドの質をあげるようお願いします。
-もし誤植や致命的なミスを見かけたら自信をもって直してください。そして[[docrails|https://github.com/lifo/docrails]]をクローンし、貴方自身でpushして下さい。
-Railsブランチの記述アクセス権は公開になっています。コミットは今後も見直されますが、それはあなたが提示する後になります。[[docrails|https://github.com/lifo/docrails]]は定期的にmasterにcross-mergedされます。
-
-You may also find incomplete content, or stuff that is not up to date. Please do add any missing documentation for master. Check the Ruby on Rails Guides Guidelines for style and conventions.
-
-もしあなたがそれらを見つけ直そうとしたとしても、自信でパッチを当てることはできないので、[[issueを開いてください|https://github.com/rails/rails/issues]]。
-
-最後に少しだけ。Ruby on Railsのdocumentationに関するどんな議題も[[Rubyonrails-docsメーリングリスト|https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-docs]]にてお待ちしています。

@@ -1,3 +1,4 @@
+翻訳者：内川貴雄
 
 Rails on Rack
 
