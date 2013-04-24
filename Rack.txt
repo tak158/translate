@@ -66,9 +66,9 @@ end
 Rails::Rack::Debuggerは開発時に非常に有用です。
 以下のテーブルは読み込まれたミドルウェアの取り扱いです：
 
-Middleware	Purpose
-Rails::Rack::Debugger	Starts Debugger
-Rack::ContentLength	Counts the number of bytes in the response and set the HTTP Content-Length header
+||!Middleware||!Purpose
+||Rails::Rack::Debugger	||Starts Debugger
+||Rack::ContentLength||レスポンスのバイト数をカウントし、HTTPのContent-Lengthヘッダを設定
 
 !!2.3 rackup
 Rails' serverの代わりにrackupを使用するには、Railsアプリケーションのルートディレクトリにあるconfig.ru内に以下を記述してください：

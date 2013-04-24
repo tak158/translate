@@ -1,12 +1,12 @@
-和訳者 内川貴雄
+翻訳者：内川貴雄
 
 Ruby on Railsをアップデートする際のガイド
 
 このガイドはあなたがRuby on Railsの新しいバージョンが出た時にアップグレードするときの方法が記述されています。これらの方法は個別のリリースガイドにも適用可能です。
 
-You need to balance out several factors: the need for new features, the increasing difficulty of finding support for old code, and your available time and skills, to name a few.
-!1 一般的なアドバイス (General Advice)
-存在しているアプリケーションをアップグレードしようと試みる前に、あなたはよいアップグレードができると信じてください。あなたはいくつかの要因を釣り合わせる必要があります:必要な新しいこと、【パス】
+!1 General Advice
+存在しているアプリケーションをアップグレードしようと試みる前に、アップグレードする優れた理由が何かを確認する必要があります。
+あなたはバランスをとるためにいくつかの要因を必要とします：それは新機能の必要性であったり、古いコードをサポートする情報が見つけきれなかったり、利用可能なスキルと時間であったりな、名前つけであったりです。
 
 
 !!1.1 テスト範囲
@@ -14,11 +14,7 @@ You need to balance out several factors: the need for new features, the increasi
 あなたのアプリケーションの大部分を行使する自動化されたテストを持っていない場合は、変更されたすべての部品を行使手動で時間を費やす必要があります。 
 Railsのアップグレードの場合には、それがアプリケーションの機能の一つ一つの部分を意味します。自分に好意を行うと、あなたは、アップグレードを開始する前に、テスト·カバレッジが良好であることを確認してください。
 
-プロセスを始める前に【】
-
-
-1.2 Ruby Versions
-!1.2 Rubyのバージョン
+!1.2 Ruby Versions
 
 Railsは最新のRubyバージョンがリリースされるとその差を縮めようとします:
 
@@ -49,7 +45,10 @@ If you choose not to make them gems, you can move them into, say, lib/my_plugin/
 *Rails 4.0はActive Recordからidentity mapを削除しました。[[結合に矛盾があった|https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6]]ためです。もし手動でそれを許可していた場合、他に影響を及ぼさないためにいかのように設定すべきです：
 cnfig.active_record.identity_map
 
-*The delete method in collection associations can now receive Fixnum or String arguments as record ids, besides records, pretty much like the destroy method does. Previously it raised ActiveRecord::AssociationTypeMismatch for such arguments. From Rails 4.0 on delete automatically tries to find the records matching the given ids before deleting them.
+
+*collection associateにおけるデリートメソッドはidのレコードとしてFixnumかStringの値を受け取り、レコードの他に、destroyメソッドに似た動作をします。
+以前は、そのような引数に対してActiveRecord::AssociationTypeMismatchを取り上げました。
+Rails 4.0 からdeleteメソッドはdeleteする前に能動的に与えられたIDが一致するレコードを見つけようとします。
 
 *Rails 4.0はActiveRecord内にスタックを蓄積する方法を変更しました。前のバージョンのRailsにおいて、新しいorderは前バージョンで書かれたorderの後に適用されます。さらに情報がほしい場合は[[Active RecordのQuery guide|http://edgeguides.rubyonrails.org/active_record_querying.html#ordering]]を参照してください。
 
@@ -95,7 +94,7 @@ Myapp::Application.config.secret_key_base = 'new secret key base'
 
 Rails 4.x上のユーザベースの100%を所有し、かつRails 3.xへロールバックする必要がないと革新するまでは、secret_key_baseを設定するのは待つべきであることに注意してください。
 その理由は、Rails 4.xにおける新しいsecret_key_base上のcookieサインはRails 3.xとの下位互換性がないからです。
-You are free to leave your existing secret_token in place, not set the new secret_key_base, and ignore the deprecation warnings until you are reasonably sure that your upgrade is otherwise complete.
+あなたは存在しているsecret_tokenを残すことは自由であり、新しいsecret_key_baseをセットする必要はなく、アップグレードが完全でなければ確信が持てない限り、警告を無視することができます。
 
 もしあなたが外部アプリケーションや署名付きセッションcookieのRailsアプリケーションを読み込むためのJavascriptに頼っているのなら、これらの心配事から切り離されるまではsecret_key_baseを設定するべきではありません。
 
@@ -183,8 +182,8 @@ config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport
 
 また、config.action_dispatch.best_standards_supportの設定環境を確認し、もし存在するなら削除してください。
 
-*In Rails 4.0, precompiling assets no longer automatically copies non-JS/CSS assets from vendor/assets and lib/assets.
-Rails application and engine developers should put these assets in app/assets or configure config.assets.precompile.
+*Rails 4.0では、プリコンパイルされた資産はもはやlib/assetsからnon-JS/CSSのしさんへコピーすることはありません。
+Railsアプリケーションとエンジン開発者は app/assets に資産を置くか、またはconfig.assets.precompileを構成する必要があります。
 
 *Rails 4.0では、リクエストフォーマットが操作できないとき、ActionControllerc::UnknownFormatが掲げられます。初期設定では、406 Not acceptableを引き起こして例外は処理されますが、あなたはこれをオーバーライドすることもできます。Rails 3では、406 Not Acceptableが常時帰ってきます。これはオーバーライドできません。
 
@@ -202,23 +201,23 @@ Rails application and engine developers should put these assets in app/assets or
 
 *Rails 4.0 ではActionControllor::Requestは非推奨で、ActionDispatch::Requestを推奨しています。
 
-*Rails 4.0 deprecated ActionController::AbstractResponse in favor of ActionDispatch::Response.
+*Rails 4.0 では ActionController::AbstractResponseは非推奨で、 ActionDispatch::Responseを推奨しています
+
 *Rails 4.0 ではActionControllor::Requestは非推奨で、ActionDispatch::Responseを推奨しています。
 
-*Rails 4.0 deprecated ActionController::Response in favor of ActionDispatch::Response.
+*Rails 4.0 ActionController::Responseは非推奨で、ActionDispatch::Responseを推奨しています
 
-*Rails 4.0 deprecated ActionController::Routing in favor of ActionDispatch::Routing.
+*Rails 4.0 では ActionController::Routing 非推奨で、ActionDispatch::Routingを推奨しています
 
 !!2.7 Active Support
 Rails 4.0はjが未だにActionView::Helpers::JavaScriptHelper#escape_javascriptで使われている頃から、ERB::Util#json_escapeのエイリアスであるjを削除しました。
 
 !!2.8 Helpers Loading Order
-1つのディレクトリ以上からのヘルパーに読み込まれた命令は、Rails 4.0にて変更しました。
-前に、これらはアルファベット順にソートされ集められました。
-After upgrading to Rails 4.0, helpers will preserve the order of loaded directories and will be sorted alphabetically only within each directory.
-Unless you explicitly use the helpers_path parameter, this change will only impact the way of loading helpers from engines.
-If you rely on the ordering, you should check if correct methods are available after upgrade.
-If you would like to change the order in which engines are loaded, you can use config.railties_order= method.
+1つのディレクトリ以上からのヘルパーに読み込まれた命令は、Rails 4.0にて変更しました。これらはアルファベット順にソートされ集められました。
+Rails 4.0にアップグレードされた後、ヘルパーは、ロードされたディレクトリの順序を保持し、各ディレクトリ内にアルファベット順にソートされます。
+明示的にhelpers_pathパラメータを使用しない限り、この変更はエンジンからヘルパーをロードする方法に影響を与えます。
+順序に依存している場合、正しい方法をアップグレード後に利用できるのなら、それをチェックする必要があります。
+エンジンがロードされる順番を変更したい場合は、config.railties_order= のメソッドを使用可能です。
 
 !!2.9 Active Record Observer and Action Controller Sweeper
 Active Record Observer と Action Controller Sweeper は rails-observers gem から取り除かれています。
@@ -269,8 +268,7 @@ config.active_record.mass_assignment_sanitizer = :strict
 
 !!3.4 vendor/plugins
 Rails 3.2 で非推奨だった vendor/plugins は Rails 4.0 で完全に削除されます。
-If you choose not to make them gems, you can move them into, say, lib/my_plugin/* and add an appropriate initializer in config/initializers/my_plugin.rb.
-Rails 3.2 のアップグレードの間で厳密に必要というわけではなく、いくつかのプラグインは、gemを交換するか、Gemfileに記述を加えるかによって代用することができます。もしgemを作ることを選択しないのなら、移動させることを選択することができます。
+Rails 3.2 のアップグレードの間で厳密に必要というわけではなく、いくつかのプラグインは、gemを交換するか、Gemfileに記述を加えるかによって代用することができます。もしgemを作ることを選択しないのなら、移動させることを選択することができます。あなたがそれらのgemを作ることをしない選択をした場合、lib/my_plugin/* と config/initializers/my_plugin.rbで適切な初期化を追加することができます。
 
 !4 Upgrading from Rails 3.0 to Rails 3.1
 もしあなたのアプリケーションが Rails 3.0.x よりも古いのなら、Rails 3.1 へのアップデートの前に Rails 3.0 へアップグレードすべきです。
@@ -371,10 +369,9 @@ end
 # in config/initializers/session_store.rb
 AppName::Application.config.session_store :cookie_store, key: 'SOMETHINGNEW'
 >>>
-or
+または
 <<<
 $ rake db:sessions:clear
 >>>
 !!4.8 Remove :cache and :concat options in asset helpers references in views
-With the Asset Pipeline the :cache and :concat options aren't used anymore, delete these options from your views.
-Asset Pipeline を使用するなら使われていない:cache と :concat オプションはあなたのviewから削除してください。
+*アセットパイプラインを用いた:cacheと:concatのオプションはもう使われていないため、あなたのビューからこれらのオプションを削除して下さい。
